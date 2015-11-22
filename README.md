@@ -11,7 +11,7 @@ Libraries: OpenGL, Glut
 
 Screenshots :
 
-![screenshot1](https://cloud.githubusercontent.com/assets/10271778/11325486/9a2e92b4-914f-11e5-83c1-1994fdc05dc4.png)
+![screenshot1](Screenshot1.png)
 ![screenshot2](https://cloud.githubusercontent.com/assets/10271778/11325488/9a2f6c98-914f-11e5-9e81-f40202ed4796.png)
 ![screenshot3](https://cloud.githubusercontent.com/assets/10271778/11325487/9a2eecd2-914f-11e5-9d88-bb5d48fe339d.png)
 

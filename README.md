@@ -1,6 +1,5 @@
 #### Project: Graph-Theory<br/>
 #### Author: DEISS Olivier<br/>
-#### Last update: 22/11/2015
 
 This project is a toolbox for Graph Theory.
 

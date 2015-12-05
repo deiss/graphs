@@ -8,11 +8,7 @@ Libraries: OpenGL, Glut
 
 -----------------------------------------------------------------------------------
 
-Screenshots :
-
-![screenshot1](Screenshot1.png)
-![screenshot2](Screenshot2.png)
-![screenshot3](Screenshot3.png)
+![screenshot](Screenshot.png)
 
 -----------------------------------------------------------------------------------
 

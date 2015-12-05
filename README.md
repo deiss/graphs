@@ -8,15 +8,11 @@ Libraries: OpenGL, Glut
 
 -----------------------------------------------------------------------------------
 
-Screenshots :
+![screenshot](Screenshot.png)
 
-![screenshot1](Screenshot1.png)
-![screenshot2](Screenshot2.png)
-![screenshot3](Screenshot3.png)
+From left to right: Prim, Ford-Fulkerson, Dijkstra
 
 -----------------------------------------------------------------------------------
-
-The project is only available for MacOS and Linux users.
 
 Keys:
  - '+': add more vertices

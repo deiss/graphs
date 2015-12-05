@@ -20,6 +20,7 @@ Keys:
  - '1': new graph
  - '2': create an oriented graph
  - '3': add weights to the edges
+ - 'a': A* algorithm
  - 'd': dijkstra algorithm
  - 'f': ford-fulkerson algorithm
  - 'p': prim algorithm

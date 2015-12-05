@@ -19,7 +19,7 @@ std::vector<const Graph *> *Window::graphs;
 
 /* Window constructor. */
 Window::Window()
-    : width(640), height(480) {
+    : width(640), height(470) {
     graphs = new std::vector<const Graph *>;
 }
 

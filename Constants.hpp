@@ -22,10 +22,13 @@ namespace Constants {
     extern unsigned char VERTEX_COLOR_R;
     extern unsigned char VERTEX_COLOR_G;
     extern unsigned char VERTEX_COLOR_B;
+    extern unsigned char VERTEX_VISITED_COLOR_R;
+    extern unsigned char VERTEX_VISITED_COLOR_G;
+    extern unsigned char VERTEX_VISITED_COLOR_B;
 
 }
 
-enum GRAPH_TYPE        {INCIDENCE_MATRIX, INCIDENCE_LIST, ADJACENCY_MATRIX, ADJACENCY_LIST};
+enum GRAPH_TYPE        {ADJACENCY_MATRIX}; //, ADJACENCY_LIST, INCIDENCE_MATRIX, INCIDENCE_LIST, };
 enum GRAPH_ALGO        {FORD_FULKERSON};
 enum GRAPH_ORIENTATION {ONE_WAY, TWO_WAYS, NONE};
 

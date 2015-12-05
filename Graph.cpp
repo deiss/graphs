@@ -27,14 +27,14 @@ Graph::Graph(GRAPH_TYPE type, int nb_vertices)
       window_id(-1) {
     graph_counter++;
     switch(type) {
-        case INCIDENCE_MATRIX :
+        /*case INCIDENCE_MATRIX :
             break;
         case INCIDENCE_LIST :
             break;
+        case ADJACENCY_LIST :
+            break;*/
         case ADJACENCY_MATRIX :
             graph_representation = new GraphRepresentationAdjacencyMatrix(nb_vertices);
-            break;
-        case ADJACENCY_LIST :
             break;
     }
 }
@@ -155,6 +155,8 @@ void Graph::keyboard(unsigned char key, int x, int y) {
         case '2' : keyboard_directions();
                    break;
         case '3' : keyboard_capacities();
+                   break;
+        case 'a' : delete handler_astar();
                    break;
         case 'd' : delete handler_dijkstra();
                    break;

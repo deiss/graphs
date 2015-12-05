@@ -3,6 +3,15 @@
 
 #include "Graph.hpp"
 
+/* A* algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
+std::vector<const Edge *> *Graph::handler_astar(Vertex *source, Vertex *destination) {
+    clear_color();
+    if(!source || !destination) { select_two_random_vertices(const_cast<const Vertex **>(&source), const_cast<const Vertex **>(&destination)); }
+    source->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
+    destination->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
+    return algo_astar(source, destination);
+}
+
 /* Dijkstra algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
 std::vector<const Edge *> *Graph::handler_dijkstra(Vertex *source, Vertex *destination) {
     clear_color();

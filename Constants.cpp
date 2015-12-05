@@ -18,8 +18,11 @@ namespace Constants {
     int           EDGE_DEFAULT_CAPACITY(0);
     int           GRAPH_MINIMUM_VERTICES(10);
     int           GRAPH_VERTICES_INCREMENTATION(70);
-    unsigned char VERTEX_COLOR_R(128);
+    unsigned char VERTEX_COLOR_R(130);
     unsigned char VERTEX_COLOR_G(255);
     unsigned char VERTEX_COLOR_B(180);
+    unsigned char VERTEX_VISITED_COLOR_R(200);
+    unsigned char VERTEX_VISITED_COLOR_G(255);
+    unsigned char VERTEX_VISITED_COLOR_B(0);
 
 }

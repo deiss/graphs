@@ -14,8 +14,6 @@ From left to right: Prim, Ford-Fulkerson, Dijkstra
 
 -----------------------------------------------------------------------------------
 
-The project is only available for MacOS and Linux users.
-
 Keys:
  - '+': add more vertices
  - '-': remove vertices

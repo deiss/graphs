@@ -25,7 +25,7 @@ void Graph::draw() const {
 
 /* Draws the edges, and the arc directions and capacities if set. */
 void Graph::draw_edges() const {
-    for(Edge *e : *graph_representation->getEdges()) {
+    for(Edge* e : *graph_representation->getEdges()) {
         double v1x = e->getV1()->getX();
         double v1y = e->getV1()->getY();
         double v2x = e->getV2()->getX();
@@ -47,7 +47,7 @@ void Graph::draw_edges() const {
 }
 
 /* Displays the edge's capacity */
-void Graph::draw_edge_capacity(Edge *e) const {
+void Graph::draw_edge_capacity(Edge* e) const {
     double v1x = e->getV1()->getX();
     double v1y = e->getV1()->getY();
     double v2x = e->getV2()->getX();
@@ -94,7 +94,7 @@ void Graph::draw_edge_capacity(Edge *e) const {
     }
 }
 
-void Graph::draw_edge_direction(Edge *e) const {
+void Graph::draw_edge_direction(Edge* e) const {
     double v1x = e->getV1()->getX();
     double v1y = e->getV1()->getY();
     double v2x = e->getV2()->getX();
@@ -158,7 +158,7 @@ void Graph::draw_edge_direction(Edge *e) const {
 
 /* Draws the vertices as circles. */
 void Graph::draw_vertices() const {
-    for(Vertex *v : *graph_representation->getVertices()) {
+    for(Vertex* v : *graph_representation->getVertices()) {
         glColor3ub(0, 0, 0);
         glPointSize(10);
         glBegin(GL_POINTS);

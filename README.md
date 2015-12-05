@@ -10,7 +10,7 @@ Libraries: OpenGL, Glut
 
 ![screenshot](Screenshot.png)
 
-From left to right: Prim, Ford-Fulkerson, Dijkstra
+From left to right: Prim, Ford-Fulkerson, A*
 
 -----------------------------------------------------------------------------------
 

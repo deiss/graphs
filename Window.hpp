@@ -10,18 +10,18 @@ class Window {
         Window();
         ~Window();
 
-        int  add(const Graph *);
+        int  add(const Graph*);
         void hide(int);
         void init();
         void launch(int)                        const;
  static void draw();
  static void keyboard(unsigned char, int, int);
  static void reshape(int, int);
-        void replaceGraph(const Graph *, const Graph*);
+        void replaceGraph(const Graph*, const Graph*);
     
     private :
     
- static std::vector<const Graph *> *graphs;
+ static std::vector<const Graph*>* graphs;
  
   const int width;
   const int height;

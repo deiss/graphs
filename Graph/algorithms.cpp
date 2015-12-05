@@ -48,7 +48,6 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
         }
     }
     /* prints the path */
-    const_cast<Vertex*>(destination)->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
     if(path_found) {
         const Vertex* v = destination;
         std::vector<const Edge*>* path = new std::vector<const Edge*>;
@@ -57,7 +56,10 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
             e->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
             path->push_back(e);
             v = previous[v];
+            const_cast<Vertex *>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
         }
+        const_cast<Vertex*>(destination)->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
+        const_cast<Vertex*>(source)->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
         return path;
     }
     else {
@@ -117,7 +119,10 @@ std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Verte
             e->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
             path->push_back(e);
             v = previous[v];
+            const_cast<Vertex *>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
         }
+        const_cast<Vertex*>(destination)->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
+        const_cast<Vertex*>(source)->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
         return path;
     }
     else {

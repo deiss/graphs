@@ -19,7 +19,7 @@ class Graph {
         Graph(GRAPH_TYPE, int);
         Graph(const Graph&);
         ~Graph();
-        Graph &operator=(const Graph&);
+        Graph& operator=(const Graph&);
     
  static void setWindow(Window* w) { window = w; }
     

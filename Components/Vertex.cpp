@@ -14,13 +14,13 @@ Vertex::Vertex(double x, double y, int id, unsigned char color_r, unsigned char 
 }
 
 /* Vertex copy constructor. */
-Vertex::Vertex(const Vertex &v)
+Vertex::Vertex(const Vertex& v)
     : Vertex(v.getX(), v.getY(), v.getId()) {
     *this = v;
 }
 
 /* Vertex assignment operator. */
-Vertex &Vertex::operator=(const Vertex &v) {
+Vertex &Vertex::operator=(const Vertex& v) {
     if(this==&v) {
         return *this;
     }
@@ -33,6 +33,6 @@ Vertex &Vertex::operator=(const Vertex &v) {
 }
 
 /* Computes the distance between two vertices. */
-double Vertex::distanceTo(const Vertex *v) const {
+double Vertex::distanceTo(const Vertex* v) const {
     return sqrt(pow(x-v->getX(), 2) + pow(y-v->getY(), 2));
 }

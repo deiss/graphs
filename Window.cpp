@@ -15,12 +15,12 @@
 #include "Window.hpp"
 
 /* Static variables. */
-std::vector<const Graph *> *Window::graphs;
+std::vector<const Graph*>* Window::graphs;
 
 /* Window constructor. */
 Window::Window()
     : width(640), height(470) {
-    graphs = new std::vector<const Graph *>;
+    graphs = new std::vector<const Graph*>;
 }
 
 /* Window destructor. */
@@ -31,21 +31,21 @@ Window::~Window() {
 /* Initialization function. */
 void Window::init() {
     int argc = 1;
-    char *argv[1] = {(char *)"Graphs"};
+    char* argv[1] = {(char*)"Graphs"};
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
     glutInitWindowSize(width, height);
 }
 
 /* Creates a new window for a new Graph. */
-int Window::add(const Graph *g) {
+int Window::add(const Graph* g) {
     graphs->push_back(g);
     return glutCreateWindow("");
 }
 
 /* Destroys the window. */
 void Window::hide(int window_id) {
-    for(std::vector<const Graph *>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
+    for(std::vector<const Graph*>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
         if((*it)->getWindowId()==window_id) {
             graphs->erase(it);
             break;
@@ -56,7 +56,7 @@ void Window::hide(int window_id) {
 
 /* Calls the Graph draw() function. */
 void Window::draw() {
-    for(const Graph *graph : *graphs) {
+    for(const Graph* graph : *graphs) {
         if(glutGetWindow()==graph->getWindowId()) {
             graph->draw();
         }
@@ -65,9 +65,9 @@ void Window::draw() {
 
 /* Calls the Graph keyboard() function. */
 void Window::keyboard(unsigned char key, int x, int y) {
-    for(const Graph *graph : *graphs) {
+    for(const Graph* graph : *graphs) {
         if(glutGetWindow()==graph->getWindowId()) {
-            const_cast<Graph *>(graph)->keyboard(key, x, y);
+            const_cast<Graph*>(graph)->keyboard(key, x, y);
             break;
         }
     }
@@ -92,8 +92,8 @@ void Window::reshape(int width, int height) {
 }
 
 /* Updates the Graph handler with the new Graph. */
-void Window::replaceGraph(const Graph *old_graph, const Graph *new_graph) {
-    for(std::vector<const Graph *>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
+void Window::replaceGraph(const Graph* old_graph, const Graph* new_graph) {
+    for(std::vector<const Graph*>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
         if(*it==old_graph) {
             graphs->erase(it);
             graphs->push_back(new_graph);

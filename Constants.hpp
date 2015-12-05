@@ -22,6 +22,9 @@ namespace Constants {
     extern unsigned char VERTEX_COLOR_R;
     extern unsigned char VERTEX_COLOR_G;
     extern unsigned char VERTEX_COLOR_B;
+    extern unsigned char VERTEX_PATH_COLOR_R;
+    extern unsigned char VERTEX_PATH_COLOR_G;
+    extern unsigned char VERTEX_PATH_COLOR_B;
     extern unsigned char VERTEX_VISITED_COLOR_R;
     extern unsigned char VERTEX_VISITED_COLOR_G;
     extern unsigned char VERTEX_VISITED_COLOR_B;

@@ -14,7 +14,7 @@
 #include "Vertex.hpp"
 
 /* Static variables. */
-Window *Graph::window(0);
+Window* Graph::window(0);
 int     Graph::graph_counter(0);
 
 /* Graph constructor. */
@@ -66,12 +66,12 @@ Graph &Graph::operator=(const Graph &g) {
 }
 
 /* Creates an Edge that binds two vertices. */
-Edge *Graph::add_edge(const Vertex *v1, const Vertex *v2, double capacity) {
+Edge* Graph::add_edge(const Vertex* v1, const Vertex* v2, double capacity) {
     return graph_representation->add_edge(v1, v2, capacity, 0);
 }
 
 /* Creates a Vertex with optional 2D coordinates. */
-Vertex *Graph::add_vertex(double x, double y) {
+Vertex* Graph::add_vertex(double x, double y) {
     return graph_representation->add_vertex(x, y);
 }
 
@@ -83,13 +83,13 @@ void Graph::generate() {
 
 /* Returns the graph's total weight. */
 double Graph::get_total_weight() {
-    std::vector<Edge *>::iterator it_begin = graph_representation->getEdges()->begin();
-    std::vector<Edge *>::iterator it_end   = graph_representation->getEdges()->end();
+    std::vector<Edge*>::iterator it_begin = graph_representation->getEdges()->begin();
+    std::vector<Edge*>::iterator it_end   = graph_representation->getEdges()->end();
     if(orientation==NONE || orientation==ONE_WAY) {
-        return std::accumulate(it_begin, it_end, 0, [](double sum, const Edge *v) { return sum + v->getCapacityV1ToV2(); });
+        return std::accumulate(it_begin, it_end, 0, [](double sum, const Edge* v) { return sum + v->getCapacityV1ToV2(); });
     }
     else {
-        return std::accumulate(it_begin, it_end, 0, [](double sum, const Edge *v) { return sum + v->getCapacityV1ToV2()+v->getCapacityV2ToV1(); });
+        return std::accumulate(it_begin, it_end, 0, [](double sum, const Edge* v) { return sum + v->getCapacityV1ToV2()+v->getCapacityV2ToV1(); });
     }
 }
 
@@ -98,10 +98,10 @@ void Graph::generate_gabriel_naive() {
     for(int i=0 ; i<nb_vertices ; i++) {
         for(int j=i+1 ; j<nb_vertices ; j++) {
             bool valid_edge = true;
-            Vertex *v1 = graph_representation->getVertices()->at(i);
-            Vertex *v2 = graph_representation->getVertices()->at(j);
+            Vertex* v1 = graph_representation->getVertices()->at(i);
+            Vertex* v2 = graph_representation->getVertices()->at(j);
             double diameter = v1->distanceTo(v2);
-            for(Vertex *v : *graph_representation->getVertices()) {
+            for(Vertex* v : *graph_representation->getVertices()) {
                 if(v!=v1 && v!=v2 && pow(v1->distanceTo(v), 2)+pow(v2->distanceTo(v), 2)<diameter*diameter) {
                     valid_edge = false;
                     break;
@@ -182,7 +182,7 @@ void Graph::keyboard_capacities() {
         arc_integer_capacities_defined = true;
     }
     else {
-        for(Edge *e : *graph_representation->getEdges()) {
+        for(Edge* e : *graph_representation->getEdges()) {
             e->setCapacityV1ToV2(Constants::EDGE_DEFAULT_CAPACITY);
             e->setCapacityV2ToV1(Constants::EDGE_DEFAULT_CAPACITY);
         }
@@ -203,7 +203,7 @@ void Graph::keyboard_directions() {
 
 /* Creates a dupplicate of the current graph and displays it. Returns true if the graph can be displayed. */
 bool Graph::keyboard_dupplicate() {
-    Graph *graph_duplicate = new Graph(type, nb_vertices);
+    Graph* graph_duplicate = new Graph(type, nb_vertices);
     *graph_duplicate       = *this;
     return graph_duplicate->display();
 }
@@ -212,7 +212,7 @@ bool Graph::keyboard_dupplicate() {
 void Graph::clear() {
     arc_integer_capacities_defined = false;
     orientation                    = NONE;
-    for(Edge *e : *graph_representation->getEdges()) {
+    for(Edge* e : *graph_representation->getEdges()) {
         e->setCapacityV1ToV2(Constants::EDGE_DEFAULT_CAPACITY);
         e->setCapacityV2ToV1(Constants::EDGE_DEFAULT_CAPACITY);
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
@@ -228,24 +228,24 @@ void Graph::clear_color() {
 
 /* Reset the vertices to the initial parameters of color */
 void Graph::clear_color_vertices() {
-    for(Edge *e : *graph_representation->getEdges()) {
+    for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
     }
-    for(Vertex *v : *graph_representation->getVertices()) {
+    for(Vertex* v : *graph_representation->getVertices()) {
         v->setColor(Constants::VERTEX_COLOR_R, Constants::VERTEX_COLOR_G, Constants::VERTEX_COLOR_B);
     }
 }
 
 /* Reset the edges to the initial parameters of color */
 void Graph::clear_color_edges() {
-    for(Edge *e : *graph_representation->getEdges()) {
+    for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
     }
 }
 
 /* Creates a new graph with the given number of vertices. The actual graph (this) is deleted. If the previous graph was being displayed, the new graph is automatically displayed in the same window. */
-Graph *Graph::rebuild_graph(int new_nb_vertices) {
-    Graph *new_graph = new Graph(type, new_nb_vertices);
+Graph* Graph::rebuild_graph(int new_nb_vertices) {
+    Graph* new_graph = new Graph(type, new_nb_vertices);
     new_graph->generate();
     if(is_displayed) {
         new_graph->setDisplayed(is_displayed);
@@ -258,7 +258,7 @@ Graph *Graph::rebuild_graph(int new_nb_vertices) {
 }
 
 /* Selects two random vertices from the graph. If the graph has at least two vertices, the two selected vertices are different. */
-void Graph::select_two_random_vertices(const Vertex **v1, const Vertex **v2) const {
+void Graph::select_two_random_vertices(const Vertex** v1, const Vertex** v2) const {
     *v1 = graph_representation->getVertices()->at(rand() % nb_vertices);
     if(nb_vertices>=2) { do { *v2 = graph_representation->getVertices()->at(rand() % nb_vertices); } while(*v1==*v2); }
     else               { *v2 = *v1; }

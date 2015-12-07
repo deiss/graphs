@@ -6,7 +6,7 @@
 #include "Graph.hpp"
 
 /* A* algorithm. While there is an unvisited vertex, select the one with minimum cost and study its neighbors. Stops when the current vertex is the destination. */
-std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* destination) {
+std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* destination, bool print_path) {
     unsigned int                           inf_unsigned = -1; inf_unsigned /= 2;
     int                                    inf_signed   = inf_unsigned;
     bool                                   path_found   = false;
@@ -38,7 +38,7 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
         for(const Vertex* v : neighbors) {
             if(!visited.count(v)) {
                 search.insert(v);
-                const_cast<Vertex*>(v)->setColor(Constants::VERTEX_VISITED_COLOR_R, Constants::VERTEX_VISITED_COLOR_G, Constants::VERTEX_VISITED_COLOR_B);
+                if(print_path) const_cast<Vertex*>(v)->setColor(Constants::VERTEX_VISITED_COLOR_R, Constants::VERTEX_VISITED_COLOR_G, Constants::VERTEX_VISITED_COLOR_B);
                 double diff = costs[v_min] + v_min->distanceTo(v);
                 if(diff<costs[v]) {
                     costs[v]    = diff;
@@ -53,13 +53,15 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
         std::vector<const Edge*>* path = new std::vector<const Edge*>;
         while(v!=source) {
             Edge* e = graph_representation->get_edge_from_to(v, previous[v]);
-            e->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
+            if(print_path) e->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
             path->push_back(e);
             v = previous[v];
-            const_cast<Vertex *>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
+            if(print_path) const_cast<Vertex *>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
         }
-        const_cast<Vertex*>(destination)->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
-        const_cast<Vertex*>(source)->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
+        if(print_path) {
+            const_cast<Vertex*>(destination)->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
+            const_cast<Vertex*>(source)->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
+        }
         return path;
     }
     else {
@@ -234,4 +236,90 @@ std::vector<const Edge*>* Graph::algo_prim() {
     /* displays the sub graph */
     for(const Edge* e : *sub_graph) const_cast<Edge*>(e)->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
     return sub_graph;
+}
+
+/* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
+std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source, std::vector<const Vertex*>* destinations) {
+    std::vector<const Vertex*>   path;
+    std::vector<const Vertex*>*  best_path    = new std::vector<const Vertex*>;
+    unsigned int                 min_cost_uns = 0; min_cost_uns--; min_cost_uns /= 2;
+    double                       min_cost     = min_cost_uns;
+    std::set<const Vertex*>      visited;
+    std::map<const Vertex*, int> v_map;
+    v_map[source] = 0;
+    for(int i=0 ; i<destinations->size() ; i++) { v_map[destinations->at(i)] = i+1; }
+    double **cost_matrix = algo_traveling_salesman_cost_matrix(source, destinations);
+    algo_traveling_salesman_callback(cost_matrix, v_map, source, destinations, &path, best_path, &visited, 0, &min_cost);
+    for(int i=0 ; i<destinations->size()+1 ; i++) delete [] cost_matrix[i];
+    delete [] cost_matrix;
+    // prints the route
+    best_path->push_back(source);
+    best_path->insert(best_path->begin(), source);
+    for(int i=0 ; i<best_path->size()-1 ; i++) {
+        std::vector<const Edge*>* sub_route = algo_astar(best_path->at(i), best_path->at(i+1));
+        for(const Edge* e : *sub_route) {
+            const_cast<Edge*>(e)->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
+            const_cast<Vertex*>(e->getV1())->setColor(Constants::VERTEX_VISITED_COLOR_R, Constants::VERTEX_VISITED_COLOR_G, Constants::VERTEX_VISITED_COLOR_B);
+            const_cast<Vertex*>(e->getV2())->setColor(Constants::VERTEX_VISITED_COLOR_R, Constants::VERTEX_VISITED_COLOR_G, Constants::VERTEX_VISITED_COLOR_B);
+        }
+    }
+    for(const Vertex* v : *best_path) {
+        const_cast<Vertex*>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
+    }
+    const_cast<Vertex*>(source)->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
+    best_path->erase(best_path->begin());
+    best_path->pop_back();
+    return best_path;
+}
+
+/* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
+void Graph::algo_traveling_salesman_callback(double** cost_matrix, std::map<const Vertex*, int> v_map, const Vertex* source, std::vector<const Vertex*>* destinations, std::vector<const Vertex*>* path, std::vector<const Vertex*>* best_path, std::set<const Vertex*>* visited, double cost, double* min_cost) {
+    if(path->size()==destinations->size()) {
+        cost += cost_matrix[v_map[path->back()]][v_map[source]];
+        if(cost<*min_cost) {
+            *min_cost = cost;
+            best_path->clear();
+            for(const Vertex* v : *path) best_path->push_back(v);
+        }
+    }
+    else {
+        for(const Vertex* d : *destinations) {
+            if(!visited->count(d)) {
+                const Vertex *v;
+                if(path->size()==0) v = source;
+                else                v = path->back();
+                cost += cost_matrix[v_map[v]][v_map[d]];
+                path->push_back(d);
+                visited->insert(d);
+                if(cost<*min_cost) algo_traveling_salesman_callback(cost_matrix, v_map, source, destinations, path, best_path, visited, cost, min_cost);
+                cost -= cost_matrix[v_map[v]][v_map[d]];
+                path->pop_back();
+                visited->erase(d);
+            }
+        }
+    }
+}
+
+/* Creates the cost matrix using the A* algorithm. */
+double** Graph::algo_traveling_salesman_cost_matrix(const Vertex* source, std::vector<const Vertex*>* destinations) {
+    int len = static_cast<int>(destinations->size())+1;
+    double **cost_matrix = new double*[len];
+    for(int i=0 ; i<len ; i++) cost_matrix[i] = new double[len];
+    for(int i=0 ; i<len ; i++) {
+        for(int j=i+1 ; j<len ; j++) {
+            const Vertex *v1;
+            if(i==0) v1 = source; else v1 = destinations->at(i-1);
+            std::vector<const Edge*>* route = algo_astar(v1, destinations->at(j-1));
+            double                    cost  = 0;
+            const Vertex*             current_v = v1;
+            for(const Edge* e : *route) {
+                if(current_v==e->getV1()) { cost += current_v->distanceTo(e->getV2()); current_v = e->getV2(); }
+                else                      { cost += current_v->distanceTo(e->getV1()); current_v = e->getV1(); }
+            }
+            cost_matrix[i][j] = cost;
+            cost_matrix[j][i] = cost;
+            delete route;
+        }
+    }
+    return cost_matrix;
 }

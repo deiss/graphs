@@ -164,6 +164,8 @@ void Graph::keyboard(unsigned char key, int x, int y) {
                    break;
         case 'p' : delete handler_prim();
                    break;
+        case 't' : delete handler_traveling_salesman();
+                   break;
         case 13  : keyboard_dupplicate();           // enter
                    break;
         case 27  : delete_graph();                  // escape
@@ -220,13 +222,13 @@ void Graph::clear() {
     clear_color_vertices();
 }
 
-/* Reset the graph to the initial parameters of color */
+/* Reset the graph to the initial parameters of color. */
 void Graph::clear_color() {
     clear_color_edges();
     clear_color_vertices();
 }
 
-/* Reset the vertices to the initial parameters of color */
+/* Reset the vertices to the initial parameters of color. */
 void Graph::clear_color_vertices() {
     for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
@@ -236,7 +238,7 @@ void Graph::clear_color_vertices() {
     }
 }
 
-/* Reset the edges to the initial parameters of color */
+/* Reset the edges to the initial parameters of color. */
 void Graph::clear_color_edges() {
     for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
@@ -262,6 +264,24 @@ void Graph::select_two_random_vertices(const Vertex** v1, const Vertex** v2) con
     *v1 = graph_representation->getVertices()->at(rand() % nb_vertices);
     if(nb_vertices>=2) { do { *v2 = graph_representation->getVertices()->at(rand() % nb_vertices); } while(*v1==*v2); }
     else               { *v2 = *v1; }
+}
+
+/* Selects oen random vertices from the graph. */
+void Graph::select_one_random_vertices(const Vertex** v) const {
+    *v = graph_representation->getVertices()->at(rand() % nb_vertices);
+}
+
+/* Selects n random vertices from the graph. If the graph has at least two vertices, the two selected vertices are different. */
+void Graph::select_n_random_vertices(std::vector<const Vertex*>** vertices, int n, const Vertex* except) const {
+    std::set<const Vertex*> included_vertices;
+    for(int i=0 ; i<n ; i++) {
+        const Vertex* v;
+        do {
+            v = graph_representation->getVertices()->at(rand() % nb_vertices);
+        } while(included_vertices.count(v) || v==except);
+        included_vertices.insert(v);
+        (*vertices)->push_back(v);
+    }
 }
 
 /* Disables the checks before an algorithm's execution and trusts the user. For example, assumes that all capacities and arc directions are correctly set before executing the Ford Fulkerson algorithm. Good behavior cannot be guaranted if those conditions are in fact not applied. */

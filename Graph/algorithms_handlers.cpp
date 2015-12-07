@@ -9,7 +9,7 @@ std::vector<const Edge*>* Graph::handler_astar(Vertex* source, Vertex* destinati
     if(!source || !destination) { select_two_random_vertices(const_cast<const Vertex**>(&source), const_cast<const Vertex**>(&destination)); }
     source->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
     destination->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
-    return algo_astar(source, destination);
+    return algo_astar(source, destination, true);
 }
 
 /* Dijkstra algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
@@ -44,4 +44,17 @@ std::vector<const Edge*>* Graph::handler_prim() {
     double w2 = std::accumulate(sub_graph->begin(), sub_graph->end(), 0, [] (double sum, const Edge* v) { return sum + v->getCapacityV1ToV2(); });
     std::cout << "initial graph weight: " << w1 << std::endl << "prim graph weight: " << w2 << " (" << 100*w2/w1 << "%)" << std::endl;
     return sub_graph;
+}
+
+/* Computes the Traveling Salesman problem given a source and a set of destinations. If not provided, those vertices are randomly selected. */
+std::vector<const Vertex*>* Graph::handler_traveling_salesman(Vertex* source, std::vector<const Vertex*>* destinations) {
+    clear_color();
+    bool delete_destinations = false;
+    if(!source)       { select_one_random_vertices(const_cast<const Vertex**>(&source)); }
+    if(!destinations) { destinations = new std::vector<const Vertex*>;
+                        delete_destinations = true;
+                        select_n_random_vertices(&destinations, Constants::GRAPH_NB_VERTICES_TRAVELING_SALESMAN, source); }
+    std::vector<const Vertex*>* res = algo_traveling_salesman(source, destinations);
+    if(delete_destinations) delete destinations;
+    return res;
 }

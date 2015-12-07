@@ -18,11 +18,16 @@ void Graph::generate_random_arc_directions() {
     }
 }
 
-/* Generates the random vertices. */
+/* Generates the random vertices. It is guaranted that each vertex has unique (x, y). */
 void Graph::generate_random_vertices() {
+    std::set<std::pair<double, double>> s;
     for(int i=0 ; i<nb_vertices ; i++) {
-        double x = static_cast<double>(rand() % 190 - 95)/100;
-        double y = static_cast<double>(rand() % 190 - 95)/100;
+        double x, y;
+        do {
+            x = static_cast<double>(rand() % 1900 - 950)/1000;
+            y = static_cast<double>(rand() % 1900 - 950)/1000;
+        } while(s.count(std::make_pair(x, y)));
+        s.insert(std::make_pair(x, y));
         graph_representation->add_vertex(x, y);
     }
 }

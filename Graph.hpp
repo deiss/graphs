@@ -4,6 +4,7 @@ ce nombre de ne peut pas changer */
 #ifndef Graph_hpp
 #define Graph_hpp
 
+#include <map>
 #include <vector>
 #include <set>
 
@@ -31,28 +32,29 @@ class Graph {
         void setOrientation(GRAPH_ORIENTATION o) { orientation = o; }
         void setWindowId(int id)                 { window_id = id; }
     
-        Edge*                     add_edge(const Vertex*, const Vertex*, double=Constants::EDGE_DEFAULT_CAPACITY);
-        Vertex*                   add_vertex(double=0, double=0);
-        void                      clear();
-        void                      clear_color();
-        void                      clear_color_edges();
-        void                      clear_color_vertices();
-        void                      delete_graph();
-        bool                      display();
-        void                      draw() const;
-        void                      generate();
-        void                      generate_gabriel_naive();
-        void                      generate_random_arc_integer_capacities();
-        void                      generate_random_arc_directions();
-        void                      generate_random_vertices();
-        double                    get_total_weight();
-        std::vector<const Edge*>* handler_astar(Vertex* =0, Vertex* =0);
-        std::vector<const Edge*>* handler_dijkstra(Vertex* =0, Vertex* =0);
-        int                       handler_ford_fulkerson(Vertex* =0, Vertex* =0);
-        std::vector<const Edge*>* handler_prim();
-        void                      keyboard(unsigned char, int, int);
-        Graph*                    rebuild_graph(int);
-        void                      set_ready_for_algo(GRAPH_ALGO algo);
+        Edge*                       add_edge(const Vertex*, const Vertex*, double=Constants::EDGE_DEFAULT_CAPACITY);
+        Vertex*                     add_vertex(double=0, double=0);
+        void                        clear();
+        void                        clear_color();
+        void                        clear_color_edges();
+        void                        clear_color_vertices();
+        void                        delete_graph();
+        bool                        display();
+        void                        draw() const;
+        void                        generate();
+        void                        generate_gabriel_naive();
+        void                        generate_random_arc_integer_capacities();
+        void                        generate_random_arc_directions();
+        void                        generate_random_vertices();
+        double                      get_total_weight();
+        std::vector<const Edge*>*   handler_astar(Vertex* =0, Vertex* =0);
+        std::vector<const Edge*>*   handler_dijkstra(Vertex* =0, Vertex* =0);
+        int                         handler_ford_fulkerson(Vertex* =0, Vertex* =0);
+        std::vector<const Edge*>*   handler_prim();
+        std::vector<const Vertex*>* handler_traveling_salesman(Vertex* =0, std::vector<const Vertex*>* =0);
+        void                        keyboard(unsigned char, int, int);
+        Graph*                      rebuild_graph(int);
+        void                        set_ready_for_algo(GRAPH_ALGO algo);
  
     private :
     
@@ -64,19 +66,24 @@ class Graph {
  static int     graph_counter;
  static Window* window;
 
-        std::vector<const Edge*>* algo_astar(const Vertex*, const Vertex*);
-        std::vector<const Edge*>* algo_dijkstra(const Vertex*, const Vertex*);
-        int                       algo_ford_fulkerson(const Vertex*, const Vertex*);
-        bool                      algo_ford_fulkerson_callback_path(const Graph*, std::vector<const Vertex*>*, std::set<const Vertex*>*, const Vertex*, const Vertex*);
-        std::vector<const Edge*>* algo_prim();
-        void                      draw_edges()                const;
-        void                      draw_edge_capacity(Edge*)  const;
-        void                      draw_edge_direction(Edge*) const;
-        void                      draw_vertices()             const;
-        void                      keyboard_capacities();
-        void                      keyboard_directions();
-        bool                      keyboard_dupplicate();
-        void                      select_two_random_vertices(const Vertex**, const Vertex**) const;
+        std::vector<const Edge*>*   algo_astar(const Vertex*, const Vertex*, bool=false);
+        std::vector<const Edge*>*   algo_dijkstra(const Vertex*, const Vertex*);
+        int                         algo_ford_fulkerson(const Vertex*, const Vertex*);
+        bool                        algo_ford_fulkerson_callback_path(const Graph*, std::vector<const Vertex*>*, std::set<const Vertex*>*, const Vertex*, const Vertex*);
+        std::vector<const Edge*>*   algo_prim();
+        std::vector<const Vertex*>* algo_traveling_salesman(const Vertex*, std::vector<const Vertex*>*);
+        void                        algo_traveling_salesman_callback(double**, std::map<const Vertex*, int>, const Vertex*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::set<const Vertex*>*, double, double*);
+        double**                    algo_traveling_salesman_cost_matrix(const Vertex*, std::vector<const Vertex*>*);
+        void                        draw_edges()               const;
+        void                        draw_edge_capacity(Edge*)  const;
+        void                        draw_edge_direction(Edge*) const;
+        void                        draw_vertices()            const;
+        void                        keyboard_capacities();
+        void                        keyboard_directions();
+        bool                        keyboard_dupplicate();
+        void                        select_one_random_vertices(const Vertex**)                                 const;
+        void                        select_two_random_vertices(const Vertex**, const Vertex**)                 const;
+        void                        select_n_random_vertices(std::vector<const Vertex*>**, int, const Vertex*) const;
 
   const int                  nb_vertices;
   const GRAPH_TYPE           type;

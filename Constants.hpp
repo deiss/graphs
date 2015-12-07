@@ -18,6 +18,7 @@ namespace Constants {
     extern int           EDGE_DEFAULT_CAPACITY;
     extern int           EDGE_MAXIMUM_CAPACITY;
     extern int           GRAPH_MINIMUM_VERTICES;
+    extern int           GRAPH_NB_VERTICES_TRAVELING_SALESMAN;
     extern int           GRAPH_VERTICES_INCREMENTATION;
     extern unsigned char VERTEX_COLOR_R;
     extern unsigned char VERTEX_COLOR_G;

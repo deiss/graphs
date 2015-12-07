@@ -17,6 +17,7 @@ namespace Constants {
     int           EDGE_MAXIMUM_CAPACITY(10);
     int           EDGE_DEFAULT_CAPACITY(0);
     int           GRAPH_MINIMUM_VERTICES(10);
+    int           GRAPH_NB_VERTICES_TRAVELING_SALESMAN(4);
     int           GRAPH_VERTICES_INCREMENTATION(70);
     unsigned char VERTEX_COLOR_R(130);
     unsigned char VERTEX_COLOR_G(255);

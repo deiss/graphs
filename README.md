@@ -25,6 +25,7 @@ Keys:
  - 'd': dijkstra algorithm
  - 'f': ford-fulkerson algorithm
  - 'p': prim algorithm
+ - 't': traveling salesman problem
  - enter: dupplicate the graph
  - escape: delete the current graph
  - space: reset the current graph

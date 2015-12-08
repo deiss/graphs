@@ -2,7 +2,7 @@
 ##### Author: DEISS Olivier
 ##### Started: September 2015
 
-This project is a toolbox for Graph Theory.
+This project is a toolbox for Graph Theory. It includes graph algorithms and an interface to visualize them, using OpengGL.
 
 Language: C++<br/>
 Libraries: OpenGL, Glut

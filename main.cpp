@@ -10,7 +10,7 @@ int main(int argc, const char * argv[]) {
     Window window;
     window.init();
     Graph::setWindow(&window);
-    Graph *graph = new Graph(ADJACENCY_MATRIX, 300);
+    Graph *graph = new Graph(ADJACENCY_MATRIX, 100);
     
     graph->generate();
     graph->display();
@@ -18,15 +18,3 @@ int main(int argc, const char * argv[]) {
     delete graph;
     return 0;
 }
-
-/*
-
-C coloriage
-P Prim
-D Dijkstra
-A A*
-S traveling slesman
-
-flipping
-
-*/

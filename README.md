@@ -29,7 +29,7 @@ Keys (algorithms):
  - 'a': A*
  - 'd': Dijkstra
  - 'e': Edmonds-Karp
- - 'f': Ford-fulkerson
+ - 'f': Ford-Fulkerson
  - 'p': Prim
  - 't': Traveling Salesman problem
 

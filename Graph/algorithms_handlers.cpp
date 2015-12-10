@@ -21,6 +21,19 @@ std::vector<const Edge*>* Graph::handler_dijkstra(Vertex* source, Vertex* destin
     return algo_dijkstra(source, destination);
 }
 
+/* Edmonds-Karp algorithm handler. It returns and prints the value of the maximum flow in the console and leave the current graph unchanged. The algorithm needs a single-oriented graph with integer flows. If the current graph already has this properties, the algorithm is made on the graph, otherwise directions and capacities are randomly set. */
+int Graph::handler_edmonds_karp(Vertex* source, Vertex* sink) {
+    clear_color();
+    if(orientation==NONE || orientation==TWO_WAYS) { generate_random_arc_directions();         orientation                    = ONE_WAY; }
+    if(!arc_integer_capacities_defined)            { generate_random_arc_integer_capacities(); arc_integer_capacities_defined = true; }
+    if(!source || !sink) { select_two_random_vertices(const_cast<const Vertex**>(&source), const_cast<const Vertex**>(&sink)); }
+    source->setColor(Constants::EDGE_ALGO_SOURCE_COLOR_R, Constants::EDGE_ALGO_SOURCE_COLOR_G, Constants::EDGE_ALGO_SOURCE_COLOR_B);
+    sink->setColor(Constants::EDGE_ALGO_DESTINATION_COLOR_R, Constants::EDGE_ALGO_DESTINATION_COLOR_G, Constants::EDGE_ALGO_DESTINATION_COLOR_B);
+    int res = algo_edmonds_karp(source, sink);
+    std::cout << "maximum flow: " << res << std::endl;
+    return res;
+}
+
 /* Fulkerson algorithm handler. It returns and prints the value of the maximum flow in the console and leave the current graph unchanged. The algorithm needs a single-oriented graph with integer flows. If the current graph already has this properties, the algorithm is made on the graph, otherwise directions and capacities are randomly set. */
 int Graph::handler_ford_fulkerson(Vertex* source, Vertex* sink) {
     clear_color();

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <numeric>
+#include <queue>
 #include <set>
 
 #include "Graph.hpp"
@@ -133,6 +134,67 @@ std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Verte
 }
 
 /* Ford Fulkerson algorithm. While there is a path from source to sink, find the smallest capacity of the path, add it to the max_flow and to every reverse edge of the path, and remove it from every edge in the path. When no more path is found, max_flow has the maximum flow and is returned. */
+int Graph::algo_edmonds_karp(const Vertex* source, const Vertex* sink) {
+    int    max_flow          = 0;
+    Graph* residual_graph    = new Graph(type, nb_vertices);
+    *residual_graph          = *this;
+    const Vertex* res_source = residual_graph->graph_representation->getVertices()->at(source->getId());
+    const Vertex* res_sink   = residual_graph->graph_representation->getVertices()->at(sink->getId());
+    /* While there is a path from source to sink */
+    bool valid_path = true;
+    do {
+        // finds a shortest path with positive capacity
+        std::map<const Vertex*, double>        path_capacity;
+        std::map<const Vertex*, const Vertex*> parents;
+        valid_path = algo_edmonds_karp_bfs(residual_graph, &path_capacity, &parents, res_source, res_sink);
+        if(valid_path) {
+            /* adds the path capacity to the max flow */
+            double flow = path_capacity[res_sink];
+            max_flow += flow;
+            /* updates the capacities */
+            const Vertex* v = res_sink;
+            while(v!=res_source) {
+                const Vertex* p = parents[v];
+                graph_representation->get_edge_from_to(v->getId(), p->getId())->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);
+                residual_graph->graph_representation->set_capacity_from_to(p, v, residual_graph->graph_representation->get_capacity_from_to(p, v)-flow);
+                residual_graph->graph_representation->set_capacity_from_to(v, p, residual_graph->graph_representation->get_capacity_from_to(v, p)+flow);
+                v = p;
+            }
+        }
+    } while(valid_path);
+    delete residual_graph;
+    return max_flow;
+}
+
+/* Breadth-First-Search algorithm for Edmonds-Karp. */
+bool Graph::algo_edmonds_karp_bfs(const Graph* graph, std::map<const Vertex*, double>* path_capacity, std::map<const Vertex*, const Vertex*>* parents, const Vertex* source, const Vertex* sink) {
+    std::queue<const Vertex*> bfs;
+    unsigned int              inf_unsigned = -1; inf_unsigned /= 2;
+    int                       inf_signed   = inf_unsigned;
+    bfs.push(source);
+    parents->insert(std::make_pair(source, source));
+    path_capacity->insert(std::make_pair(source, inf_signed));
+    while(!bfs.empty()) {
+        const Vertex* v = bfs.front();
+        bfs.pop();
+        for(const Vertex* n : graph->graph_representation->get_direct_neighbors(v, orientation)) {
+            double capacity_v_n = graph->graph_representation->get_capacity_from_to(v, n);
+            if(capacity_v_n>0 && !parents->count(n)) {
+                parents->insert(std::make_pair(n, v));
+                path_capacity->insert(std::make_pair(n, std::min(path_capacity->at(v), capacity_v_n)));
+                if(n!=sink) {
+                    bfs.push(n);
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+/* Ford Fulkerson algorithm. While there is a path from source to sink, find the smallest capacity of the path, add it to the max_flow and to every reverse edge of the path, and remove it from every edge in the path. When no more path is found, max_flow has the maximum flow and is returned. */
 int Graph::algo_ford_fulkerson(const Vertex* source, const Vertex* sink) {
     int    max_flow          = 0;
     Graph* residual_graph    = new Graph(type, nb_vertices);
@@ -148,7 +210,7 @@ int Graph::algo_ford_fulkerson(const Vertex* source, const Vertex* sink) {
         visited->insert(res_source);
         path->clear();
         path->push_back(res_source);
-        valid_path = algo_ford_fulkerson_callback_path(const_cast<const Graph *>(residual_graph), path, visited, res_source, res_sink);
+        valid_path = algo_ford_fulkerson_dfs(const_cast<const Graph *>(residual_graph), path, visited, res_source, res_sink);
         if(valid_path) {
             /* finds the minimum capacity */
             int min_flow = residual_graph->graph_representation->get_capacity_from_to(res_source, path->at(1));
@@ -177,7 +239,7 @@ int Graph::algo_ford_fulkerson(const Vertex* source, const Vertex* sink) {
 }
 
 /* Ford Fulkerson algorithm callback method. Tries to find a valid path from source to sink and returns true if a path is found. Otherwise returns false. */
-bool Graph::algo_ford_fulkerson_callback_path(const Graph* graph, std::vector<const Vertex*>* path, std::set<const Vertex*>* visited, const Vertex* source, const Vertex* sink) {
+bool Graph::algo_ford_fulkerson_dfs(const Graph* graph, std::vector<const Vertex*>* path, std::set<const Vertex*>* visited, const Vertex* source, const Vertex* sink) {
     for(const Vertex* v : graph->graph_representation->get_direct_neighbors(path->back(), orientation)) {
         if(graph->graph_representation->get_capacity_from_to(path->back(), v)>0) {
             if(v==sink) {
@@ -188,7 +250,7 @@ bool Graph::algo_ford_fulkerson_callback_path(const Graph* graph, std::vector<co
                 const_cast<Vertex*>(v)->setColor(0, 255, 255);
                 path->push_back(v);
                 visited->insert(v);
-                bool res = algo_ford_fulkerson_callback_path(graph, path, visited, source, sink);
+                bool res = algo_ford_fulkerson_dfs(graph, path, visited, source, sink);
                 if(res) {
                     return true;
                 }

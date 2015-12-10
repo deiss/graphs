@@ -49,6 +49,7 @@ class Graph {
         double                      get_total_weight();
         std::vector<const Edge*>*   handler_astar(Vertex* =0, Vertex* =0);
         std::vector<const Edge*>*   handler_dijkstra(Vertex* =0, Vertex* =0);
+        int                         handler_edmonds_karp(Vertex* =0, Vertex* =0);
         int                         handler_ford_fulkerson(Vertex* =0, Vertex* =0);
         std::vector<const Edge*>*   handler_prim();
         std::vector<const Vertex*>* handler_traveling_salesman(Vertex* =0, std::vector<const Vertex*>* =0);
@@ -68,8 +69,10 @@ class Graph {
 
         std::vector<const Edge*>*   algo_astar(const Vertex*, const Vertex*, bool=false);
         std::vector<const Edge*>*   algo_dijkstra(const Vertex*, const Vertex*);
+        int                         algo_edmonds_karp(const Vertex*, const Vertex*);
+        bool                        algo_edmonds_karp_bfs(const Graph*, std::map<const Vertex*, double>*, std::map<const Vertex*, const Vertex*>*, const Vertex*, const Vertex*);
         int                         algo_ford_fulkerson(const Vertex*, const Vertex*);
-        bool                        algo_ford_fulkerson_callback_path(const Graph*, std::vector<const Vertex*>*, std::set<const Vertex*>*, const Vertex*, const Vertex*);
+        bool                        algo_ford_fulkerson_dfs(const Graph*, std::vector<const Vertex*>*, std::set<const Vertex*>*, const Vertex*, const Vertex*);
         std::vector<const Edge*>*   algo_prim();
         std::vector<const Vertex*>* algo_traveling_salesman(const Vertex*, std::vector<const Vertex*>*);
         void                        algo_traveling_salesman_callback(double**, std::map<const Vertex*, int>, const Vertex*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::set<const Vertex*>*, double, double*);

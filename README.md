@@ -11,7 +11,7 @@ Libraries: OpenGL, Glut
 
 ![screenshot](Screenshot.png)
 
-From left to right: Prim, Ford-Fulkerson, A*
+From left to right:  minimum spanning tree (Prim), maximum flow (Ford-Fulkerson), shortest path and visited vertices (A*)
 
 -----------------------------------------------------------------------------------
 
@@ -29,7 +29,9 @@ Keys (algorithms):
  - 'a': A*
  - 'd': Dijkstra
  - 'e': Edmonds-Karp
- - 'f': Ford-fulkerson
+ - 'f': Ford-Fulkerson
  - 'p': Prim
  - 't': Traveling Salesman problem
+
+
 

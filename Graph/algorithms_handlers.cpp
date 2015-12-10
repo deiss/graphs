@@ -12,6 +12,14 @@ std::vector<const Edge*>* Graph::handler_astar(Vertex* source, Vertex* destinati
     return algo_astar(source, destination, true);
 }
 
+/* Bron-Kerbosch algorithm handler. The algorithm finds the maximum clique of the graph and returns the set of vertices of this clique. */
+std::set<const Vertex*>* Graph::handler_bron_kerbosch() {
+    clear_color();
+    std::set<const Vertex*>* res = algo_bron_kerbosch();
+    std::cout << "clique number: " << res->size() << std::endl;
+    return res;
+}
+
 /* Dijkstra algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
 std::vector<const Edge*>* Graph::handler_dijkstra(Vertex* source, Vertex* destination) {
     clear_color();

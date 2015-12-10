@@ -133,6 +133,17 @@ std::vector<Vertex*> GraphRepresentationAdjacencyMatrix::get_all_neighbors(const
     return neighbors;
 }
 
+/* Returns the vertices connected to v or to which v is connected (both ways). */
+std::set<Vertex*> GraphRepresentationAdjacencyMatrix::get_all_neighbors_set(const Vertex* v) const {
+    std::set<Vertex*> neighbors;
+    for(int i=0 ; i<nb_vertices ; i++) {
+        if(matrix[v->getId()][i]) {
+            neighbors.insert(vertices->at(i));
+        }
+    }
+    return neighbors;
+}
+
 /* Returns the vertices to which v is connected (one way). */
 std::vector<Vertex*> GraphRepresentationAdjacencyMatrix::get_direct_neighbors(const Vertex* v, GRAPH_ORIENTATION orientation) const {
     std::vector<Vertex*> neighbors;
@@ -140,7 +151,7 @@ std::vector<Vertex*> GraphRepresentationAdjacencyMatrix::get_direct_neighbors(co
         Edge* e = matrix[v->getId()][i];
         if(e) {
             Vertex* v2 = vertices->at(i);
-            if((orientation==GRAPH_ORIENTATION::ONE_WAY && v==e->getV1() && v2==e->getV2()) || orientation==GRAPH_ORIENTATION::NONE || orientation==GRAPH_ORIENTATION::TWO_WAYS) neighbors.push_back(vertices->at(i));
+            if((orientation==GRAPH_ORIENTATION::ONE_WAY && v==e->getV1() && v2==e->getV2()) || orientation==GRAPH_ORIENTATION::NONE || orientation==GRAPH_ORIENTATION::TWO_WAYS) neighbors.push_back(v2);
         }
     }
     return neighbors;

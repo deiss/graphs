@@ -158,6 +158,8 @@ void Graph::keyboard(unsigned char key, int x, int y) {
                    break;
         case 'a' : delete handler_astar();
                    break;
+        case 'b' : delete handler_bron_kerbosch();
+                   break;
         case 'd' : delete handler_dijkstra();
                    break;
         case 'e' : handler_edmonds_karp();

@@ -1,6 +1,7 @@
 #ifndef GraphRepresentation_h
 #define GraphRepresentation_h
 
+#include <set>
 #include <vector>
 
 #include "Constants.hpp"
@@ -20,6 +21,7 @@ virtual GraphRepresentation& operator=(const GraphRepresentation&) = 0;
         std::vector<Vertex*> *getVertices() const { return vertices; }
     
 virtual std::vector<Vertex*> get_all_neighbors(const Vertex*)                       const = 0;
+virtual std::set<Vertex*>    get_all_neighbors_set(const Vertex*)                   const = 0;
 virtual Edge*                get_edge_from_to(const Vertex*, const Vertex*)         const = 0;
 virtual Edge*                get_edge_from_to(int, int)                             const = 0;
 virtual std::vector<Vertex*> get_direct_neighbors(const Vertex*, GRAPH_ORIENTATION) const = 0;

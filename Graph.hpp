@@ -48,6 +48,7 @@ class Graph {
         void                        generate_random_vertices();
         double                      get_total_weight();
         std::vector<const Edge*>*   handler_astar(Vertex* =0, Vertex* =0);
+        std::set<const Vertex*>*    handler_bron_kerbosch();
         std::vector<const Edge*>*   handler_dijkstra(Vertex* =0, Vertex* =0);
         int                         handler_edmonds_karp(Vertex* =0, Vertex* =0);
         int                         handler_ford_fulkerson(Vertex* =0, Vertex* =0);
@@ -68,6 +69,8 @@ class Graph {
  static Window* window;
 
         std::vector<const Edge*>*   algo_astar(const Vertex*, const Vertex*, bool=false);
+        std::set<const Vertex*>*    algo_bron_kerbosch();
+        bool                        algo_bron_kerbosch_callback(std::vector<std::set<const Vertex*>>*, std::set<const Vertex*>, std::set<const Vertex*>, std::set<const Vertex*>);
         std::vector<const Edge*>*   algo_dijkstra(const Vertex*, const Vertex*);
         int                         algo_edmonds_karp(const Vertex*, const Vertex*);
         bool                        algo_edmonds_karp_bfs(const Graph*, std::map<const Vertex*, double>*, std::map<const Vertex*, const Vertex*>*, const Vertex*, const Vertex*);

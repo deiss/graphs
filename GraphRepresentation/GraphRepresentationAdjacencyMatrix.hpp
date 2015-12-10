@@ -24,8 +24,9 @@ class GraphRepresentationAdjacencyMatrix : public GraphRepresentation {
         Edge*                  get_edge_from_to(const Vertex*, const Vertex*)         const;
         int                    get_capacity_from_to(const Vertex*, const Vertex*)     const;
         int                    get_capacity_from_to(int, int)                         const;
-        std::vector<Vertex* >  get_all_neighbors(const Vertex*)                       const;
-        std::vector<Vertex* >  get_direct_neighbors(const Vertex*, GRAPH_ORIENTATION) const;
+        std::vector<Vertex*>   get_all_neighbors(const Vertex*)                       const;
+        std::set<Vertex*>      get_all_neighbors_set(const Vertex*)                   const;
+        std::vector<Vertex*>   get_direct_neighbors(const Vertex*, GRAPH_ORIENTATION) const;
         void                   set_capacity_from_to(const Vertex*, const Vertex*, double);
     
     private :

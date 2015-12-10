@@ -70,6 +70,54 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
     }
 }
 
+/* Bron-Kerbosch algorithm. Returns only the first found biggest clique. */
+std::set<const Vertex*>* Graph::algo_bron_kerbosch() {
+    std::vector<std::set<const Vertex*>> cliques;
+    std::set<const Vertex*>*             max_clique = new std::set<const Vertex*>;
+    std::set<const Vertex*>              R;
+    std::set<const Vertex*>              X;
+    std::set<const Vertex*>              P;
+    for(const Vertex* v : *graph_representation->getVertices()) P.insert(v);
+    algo_bron_kerbosch_callback(&cliques, R, P, X);
+    /* finds the first biggest clique */
+    std::vector<std::set<const Vertex*>>::iterator max_clique_it = std::max_element(cliques.begin(), cliques.end(), [&](std::set<const Vertex*> s1, std::set<const Vertex*> s2) {
+        return s1.size() < s2.size();
+    });
+    for(const Vertex* v : *max_clique_it) max_clique->insert(v);
+    /* prints the clique */
+    for(const Vertex* v : *max_clique) {
+        const_cast<Vertex *>(v)->setColor(Constants::VERTEX_PATH_COLOR_R, Constants::VERTEX_PATH_COLOR_G, Constants::VERTEX_PATH_COLOR_B);
+    }
+    return max_clique;
+}
+
+/* Bron-Kerbosch callback method. */
+bool Graph::algo_bron_kerbosch_callback(std::vector<std::set<const Vertex*>>* cliques, std::set<const Vertex*> R, std::set<const Vertex*> P, std::set<const Vertex*> X) {
+    if(P.empty() && X.empty()) {
+        cliques->push_back(R);
+    }
+    while(!P.empty()) {
+        const Vertex* v = *(P.begin());
+        R.insert(v);
+        std::set<Vertex*>       neighbors = graph_representation->get_all_neighbors_set(v);
+        std::set<const Vertex*> P_and_n;
+        std::set<const Vertex*> X_and_n;
+        for(const Vertex* n : neighbors) {
+            if(P.count(n)) P_and_n.insert(n);
+            if(X.count(n)) X_and_n.insert(n);
+        }
+        if(algo_bron_kerbosch_callback(cliques, R, P_and_n, X_and_n)) {
+            return true;
+        }
+        else {
+            R.erase(v);
+            P.erase(v);
+            X.insert(v);
+        }
+    }
+    return false;
+}
+
 /* Dijkstra algorithm. While there is an unvisited vertex, select the one with minimum cost and study its neighbors. Stops when the current vertex is the destination. */
 std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Vertex* destination) {
     unsigned int                           inf_unsigned = -1; inf_unsigned /= 2;

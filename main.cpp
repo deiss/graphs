@@ -10,8 +10,8 @@ int main(int argc, const char * argv[]) {
     Window window;
     window.init();
     Graph::setWindow(&window);
-    Graph *graph = new Graph(ADJACENCY_MATRIX, 100);
     
+    Graph *graph = new Graph(ADJACENCY_MATRIX, 600);
     graph->generate();
     graph->display();
     

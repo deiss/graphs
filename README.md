@@ -2,7 +2,7 @@
 ##### Author: DEISS Olivier
 ##### Started: September 2015
 
-This project is a toolbox for Graph Theory. It includes graph algorithms and an interface to visualize them, using OpengGL.
+This project is a toolbox for Graph Theory. It includes graph algorithms and an interface to visualize them, using OpengGL. The project comes with a function to generate random Gabriel graphs. These graph look like road maps and are therefore nice for the study of lots of Graph algorithms. Unfortunately, they are not relevant for every of the implemented algorithms: for instance, the Bron-Kerbosch algorithm, that computes the clique number of the graph, will always return a triangle as the maximum clique.
 
 Language: C++<br/>
 Libraries: OpenGL, Glut
@@ -27,6 +27,7 @@ Keys (graph management):
 
 Keys (algorithms): 
  - 'a': A*
+ - 'b': Bron-Kerbosch
  - 'd': Dijkstra
  - 'e': Edmonds-Karp
  - 'f': Ford-Fulkerson

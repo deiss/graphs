@@ -32,7 +32,7 @@ Keys (algorithms):
  - 'e': Edmonds-Karp
  - 'f': Ford-Fulkerson
  - 'p': Prim
- - 't': Traveling Salesman problem
+ - 't': Traveling Salesman
 
 
 

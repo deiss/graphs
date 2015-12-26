@@ -36,3 +36,6 @@ Vertex &Vertex::operator=(const Vertex& v) {
 double Vertex::distanceTo(const Vertex* v) const {
     return sqrt(pow(x-v->getX(), 2) + pow(y-v->getY(), 2));
 }
+double Vertex::distanceTo(double x, double y) const {
+    return sqrt(pow(this->x-x, 2) + pow(this->y-y, 2));
+}

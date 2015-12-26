@@ -2,6 +2,9 @@
 
 namespace Constants {
 
+    const int           AREA_HEIGHT(1900);
+    const int           AREA_WIDTH(1900);
+    const int           AREA_SPACING(4);
     const unsigned char EDGE_ALGO_RESULT_COLOR_R(255);
     const unsigned char EDGE_ALGO_RESULT_COLOR_G(0);
     const unsigned char EDGE_ALGO_RESULT_COLOR_B(0);

@@ -3,6 +3,9 @@
 
 namespace Constants {
 
+    extern const int           AREA_HEIGHT;
+    extern const int           AREA_WIDTH;
+    extern const int           AREA_SPACING;
     extern const unsigned char EDGE_ALGO_RESULT_COLOR_R;
     extern const unsigned char EDGE_ALGO_RESULT_COLOR_G;
     extern const unsigned char EDGE_ALGO_RESULT_COLOR_B;

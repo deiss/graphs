@@ -46,6 +46,7 @@ class Graph {
         void                        generate_random_arc_integer_capacities();
         void                        generate_random_arc_directions();
         void                        generate_random_vertices();
+        void                        generate_random_vertices_spacing();
         double                      get_total_weight();
         std::vector<const Edge*>*   handler_astar(Vertex* =0, Vertex* =0);
         std::set<const Vertex*>*    handler_bron_kerbosch();

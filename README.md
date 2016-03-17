@@ -35,13 +35,13 @@ Call `bin/graphs` to launch the application. You can manage graphs and windows w
 * `space`: reset the current graph
 
 You can call the different implemented algorithms with:
-* `a`: A*
-* `b`: Bron-Kerbosch
-* `d`: Dijkstra
-* `e`: Edmonds-Karp
-* `f`: Ford-Fulkerson
-* `p`: Prim
-* `t`: Traveling Salesman
+* `a`: A* (shortest path)
+* `b`: Bron-Kerbosch (maximal clique)
+* `d`: Dijkstra (shortest path)
+* `e`: Edmonds-Karp (maximum flow)
+* `f`: Ford-Fulkerson (maximum flow)
+* `p`: Prim (minimum spanning tree)
+* `t`: Traveling Salesman (shortest route)
 
 ***
 

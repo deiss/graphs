@@ -16,11 +16,11 @@ You need to have glut installed on your platform. You can install it with:
 
 	apt-get install freeglut3 freeglut3-dev
 
-Then running `make linux` will compile *FFTOcean* in *bin*. You can run `make clean` to delete the build directory.
+Then running `make linux` will compile *Graphs* in *bin*. You can run `make clean` to delete the build directory.
 
 ##### Mac
 
-You need to have XCode installed on your system. Then running `make mac` will compile *FFTOcean* in *bin*. You can run `make clean` to delete the build directory.
+You need to have XCode installed on your system. Then running `make mac` will compile *Graphs* in *bin*. You can run `make clean` to delete the build directory.
 
 ***
 
@@ -44,3 +44,28 @@ You can call the different implemented algorithms with:
 * 'f': Ford-Fulkerson
 * 'p': Prim
 * 't': Traveling Salesman
+
+***
+
+### License
+
+Graphs - Copyright (C) 2016 -  Olivier Deiss
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received [a copy of the GNU General Public License](COPYING)
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+***
+
+### Contact
+
+olivier . deiss [at] gmail . com

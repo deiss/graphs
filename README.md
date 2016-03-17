@@ -2,8 +2,6 @@
 
 ![Screenshot](media/Screenshot.png)
 
-From left to right:  minimum spanning tree (Prim), maximum flow (Ford-Fulkerson), shortest path and visited vertices (A*)
-
 Graphs is a toolbox for Graph Theory written in C++ with OpenGL and glut. It includes graph algorithms and an interface to visualize them. The project works with Gabriel graphs: these graphs look like road maps and are therefore nice for the study of lots of Graph algorithms.
 
 ***

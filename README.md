@@ -25,23 +25,23 @@ You need to have XCode installed on your system. Then running `make mac` will co
 ### Use
 
 Call `bin/graphs` to launch the application. You can manage graphs and windows with the following keys: 
-* '+': add more vertices
-* '-': remove vertices
-* '1': new graph
-* '2': create an oriented graph
-* '3': add weights to the edges
-* enter: dupplicate the graph
-* escape: delete the current graph
-* space: reset the current graph
+* `+`: add more vertices
+* `-`: remove vertices
+* `1`: new graph
+* `2`: create an oriented graph
+* `3`: add weights to the edges
+* `enter`: dupplicate the graph
+* `escape`: delete the current graph
+* `space`: reset the current graph
 
 You can call the different implemented algorithms with:
-* 'a': A*
-* 'b': Bron-Kerbosch
-* 'd': Dijkstra
-* 'e': Edmonds-Karp
-* 'f': Ford-Fulkerson
-* 'p': Prim
-* 't': Traveling Salesman
+* `a`: A*
+* `b`: Bron-Kerbosch
+* `d`: Dijkstra
+* `e`: Edmonds-Karp
+* `f`: Ford-Fulkerson
+* `p`: Prim
+* `t`: Traveling Salesman
 
 ***
 

@@ -24,7 +24,10 @@ You need to have XCode installed on your system. Then running `make mac` will co
 
 ### Use
 
-Call `bin/graphs` to launch the application. You can manage graphs and windows with the following keys: 
+Call `bin/graphs` to launch the application. The keys are described below.
+
+##### Graphs and Windows managements
+
 * `+`: add more vertices
 * `-`: remove vertices
 * `1`: new graph
@@ -34,7 +37,8 @@ Call `bin/graphs` to launch the application. You can manage graphs and windows w
 * `escape`: delete the current graph
 * `space`: reset the current graph
 
-You can call the different implemented algorithms with:
+##### Algorithms
+
 * `a`: A* (shortest path)
 * `b`: Bron-Kerbosch (maximal clique)
 * `d`: Dijkstra (shortest path)

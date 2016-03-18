@@ -384,12 +384,12 @@ std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source,
     for(int i=0 ; i<destinations->size() ; i++) { v_map[destinations->at(i)] = i+1; }
     double **cost_matrix = algo_traveling_salesman_cost_matrix(source, destinations);
     algo_traveling_salesman_callback(cost_matrix, v_map, source, destinations, &path, best_path, &visited, 0, &min_cost);
-    for(int i=0 ; i<destinations->size()+1 ; i++) delete [] cost_matrix[i];
+    for(unsigned long int i=0 ; i<destinations->size()+1 ; i++) delete [] cost_matrix[i];
     delete [] cost_matrix;
     // prints the route
     best_path->push_back(source);
     best_path->insert(best_path->begin(), source);
-    for(int i=0 ; i<best_path->size()-1 ; i++) {
+    for(unsigned long int i=0 ; i<best_path->size()-1 ; i++) {
         std::vector<const Edge*>* sub_route = algo_astar(best_path->at(i), best_path->at(i+1));
         for(const Edge* e : *sub_route) {
             const_cast<Edge*>(e)->setColor(Constants::EDGE_ALGO_RESULT_COLOR_R, Constants::EDGE_ALGO_RESULT_COLOR_G, Constants::EDGE_ALGO_RESULT_COLOR_B);

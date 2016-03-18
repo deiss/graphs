@@ -374,14 +374,14 @@ std::vector<const Edge*>* Graph::algo_prim() {
 
 /* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
 std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source, std::vector<const Vertex*>* destinations) {
-    std::vector<const Vertex*>   path;
-    std::vector<const Vertex*>*  best_path    = new std::vector<const Vertex*>;
-    unsigned int                 min_cost_uns = 0; min_cost_uns--; min_cost_uns /= 2;
-    double                       min_cost     = min_cost_uns;
-    std::set<const Vertex*>      visited;
-    std::map<const Vertex*, int> v_map;
+    std::vector<const Vertex*>                 path;
+    std::vector<const Vertex*>*                best_path    = new std::vector<const Vertex*>;
+    unsigned int                               min_cost_uns = 0; min_cost_uns--; min_cost_uns /= 2;
+    double                                     min_cost     = min_cost_uns;
+    std::set<const Vertex*>                    visited;
+    std::map<const Vertex*, unsigned long int> v_map;
     v_map[source] = 0;
-    for(int i=0 ; i<destinations->size() ; i++) { v_map[destinations->at(i)] = i+1; }
+    for(unsigned long int i=0 ; i<destinations->size() ; i++) { v_map[destinations->at(i)] = i+1; }
     double **cost_matrix = algo_traveling_salesman_cost_matrix(source, destinations);
     algo_traveling_salesman_callback(cost_matrix, v_map, source, destinations, &path, best_path, &visited, 0, &min_cost);
     for(unsigned long int i=0 ; i<destinations->size()+1 ; i++) delete [] cost_matrix[i];
@@ -407,7 +407,7 @@ std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source,
 }
 
 /* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
-void Graph::algo_traveling_salesman_callback(double** cost_matrix, std::map<const Vertex*, int> v_map, const Vertex* source, std::vector<const Vertex*>* destinations, std::vector<const Vertex*>* path, std::vector<const Vertex*>* best_path, std::set<const Vertex*>* visited, double cost, double* min_cost) {
+void Graph::algo_traveling_salesman_callback(double** cost_matrix, std::map<const Vertex*, unsigned long int> v_map, const Vertex* source, std::vector<const Vertex*>* destinations, std::vector<const Vertex*>* path, std::vector<const Vertex*>* best_path, std::set<const Vertex*>* visited, double cost, double* min_cost) {
     if(path->size()==destinations->size()) {
         cost += cost_matrix[v_map[path->back()]][v_map[source]];
         if(cost<*min_cost) {

@@ -99,7 +99,7 @@ class Graph {
         bool                        algo_ford_fulkerson_dfs(const Graph*, std::vector<const Vertex*>*, std::set<const Vertex*>*, const Vertex*, const Vertex*);
         std::vector<const Edge*>*   algo_prim();
         std::vector<const Vertex*>* algo_traveling_salesman(const Vertex*, std::vector<const Vertex*>*);
-        void                        algo_traveling_salesman_callback(double**, std::map<const Vertex*, int>, const Vertex*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::set<const Vertex*>*, double, double*);
+        void                        algo_traveling_salesman_callback(double**, std::map<const Vertex*, unsigned long int>, const Vertex*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::vector<const Vertex*>*, std::set<const Vertex*>*, double, double*);
         double**                    algo_traveling_salesman_cost_matrix(const Vertex*, std::vector<const Vertex*>*);
         void                        draw_edges()               const;
         void                        draw_edge_capacity(Edge*)  const;

@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <chrono>
+#include <cstring>
 #include <iostream>
 #include <cmath>
 #include <thread>

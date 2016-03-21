@@ -31,7 +31,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Graph.hpp"
 
-/* Main draw function. */
+/*
+Main draw function.
+*/
 void Graph::draw() const {
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
@@ -43,7 +45,9 @@ void Graph::draw() const {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
-/* Draws the edges, and the arc directions and capacities if set. */
+/*
+Draws the edges, and the arc directions and capacities if set.
+*/
 void Graph::draw_edges() const {
     for(Edge* e : *graph_representation->getEdges()) {
         double v1x = e->getV1()->getX();
@@ -66,7 +70,9 @@ void Graph::draw_edges() const {
     }
 }
 
-/* Displays the edge's capacity */
+/*
+Displays the edge's capacity.
+*/
 void Graph::draw_edge_capacity(Edge* e) const {
     double v1x = e->getV1()->getX();
     double v1y = e->getV1()->getY();
@@ -114,6 +120,9 @@ void Graph::draw_edge_capacity(Edge* e) const {
     }
 }
 
+/*
+Displays the edge's direction.
+*/
 void Graph::draw_edge_direction(Edge* e) const {
     double v1x = e->getV1()->getX();
     double v1y = e->getV1()->getY();
@@ -143,7 +152,7 @@ void Graph::draw_edge_direction(Edge* e) const {
             glEnd();
             glPopMatrix();
         }
-        else if(orientation==TWO_WAYS) { ///////////////// A MODIFIER
+        else if(orientation==TWO_WAYS) { /* ***************************** TO BE UPDATED ************************** */
             glPushMatrix();
             glLoadIdentity();
             glTranslatef(v1x, v1y, 0);
@@ -176,7 +185,9 @@ void Graph::draw_edge_direction(Edge* e) const {
     }
 }
 
-/* Draws the vertices as circles. */
+/*
+Draws the vertices as circles.
+*/
 void Graph::draw_vertices() const {
     for(Vertex* v : *graph_representation->getVertices()) {
         glColor3ub(0, 0, 0);

@@ -26,7 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Graph.hpp"
 
-/* Generates random integer capacities for each arc in the graph. If orientation is ONE_WAY or NONE, capacity_v1_v2 is used and capacity_v2_v1 is set to zero. Otherwise both are given a random capacity. */
+/*
+Generates random integer capacities for each arc in the graph. If orientation
+is ONE_WAY or NONE, capacity_v1_v2 is used and capacity_v2_v1 is set to zero.
+Otherwise both are given a random capacity.
+*/
 void Graph::generate_random_arc_integer_capacities() {
     for(Edge* e : *graph_representation->getEdges()) {
                                   e->setCapacityV1ToV2(rand()%Constants::EDGE_MAXIMUM_CAPACITY + 1);
@@ -35,14 +39,18 @@ void Graph::generate_random_arc_integer_capacities() {
     }
 }
 
-/* Randomly switches vertices v1 and v2 of each edge of the graph. */
+/*
+Randomly switches vertices v1 and v2 of each edge of the graph.
+*/
 void Graph::generate_random_arc_directions() {
     for(Edge* e : *graph_representation->getEdges()) {
         if(rand()%2) e->switch_vertices();
     }
 }
 
-/* Generates the random vertices. It is guaranted that each vertex has unique (x, y). */
+/*
+Generates the random vertices. It is guaranted that each vertex has unique (x, y).
+*/
 void Graph::generate_random_vertices() {
     std::set<std::pair<double, double>> s;
     for(int i=0 ; i<nb_vertices ; i++) {
@@ -56,7 +64,9 @@ void Graph::generate_random_vertices() {
     }
 }
 
-/* Generates the random vertices. It is guaranted that each vertex has unique (x, y). */
+/*
+Generates the random vertices. It is guaranted that each vertex has unique (x, y).
+*/
 void Graph::generate_random_vertices_spacing() {
     std::vector<std::pair<int, int>> empty_cells;
     int                              nb_x_cells = ceil(Constants::AREA_WIDTH/Constants::AREA_SPACING);

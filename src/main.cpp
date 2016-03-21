@@ -30,18 +30,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, const char * argv[]) {
 
-    std::set<int> s;
-    for(int i : s) std::cout << i;
-
+    /* rand initialization */
     srand(static_cast<unsigned int>(time(NULL)));
+    
+    /* rendering */
     Window window;
     window.init();
     Graph::setWindow(&window);
     
+    /* grpah creation */
     Graph *graph = new Graph(ADJACENCY_MATRIX, 60);
     graph->generate();
     graph->display();
-    
+
     delete graph;
     return 0;
+
 }

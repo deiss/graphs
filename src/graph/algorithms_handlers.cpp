@@ -26,7 +26,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Graph.hpp"
 
-/* A* algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
+/*
+A* algorithm handler. Finds the shortest path between two randomly selected
+vertices, display it. It works on single oriented and non oriented graphs.
+*/
 std::vector<const Edge*>* Graph::handler_astar(Vertex* source, Vertex* destination) {
     clear_color();
     if(!source || !destination) { select_two_random_vertices(const_cast<const Vertex**>(&source), const_cast<const Vertex**>(&destination)); }
@@ -35,7 +38,10 @@ std::vector<const Edge*>* Graph::handler_astar(Vertex* source, Vertex* destinati
     return algo_astar(source, destination, true);
 }
 
-/* Bron-Kerbosch algorithm handler. The algorithm finds the maximum clique of the graph and returns the set of vertices of this clique. */
+/*
+Bron-Kerbosch algorithm handler. The algorithm finds the maximum clique
+of the graph and returns the set of vertices of this clique.
+*/
 std::set<const Vertex*>* Graph::handler_bron_kerbosch() {
     clear_color();
     std::set<const Vertex*>* res = algo_bron_kerbosch();
@@ -43,7 +49,11 @@ std::set<const Vertex*>* Graph::handler_bron_kerbosch() {
     return res;
 }
 
-/* Dijkstra algorithm handler. Finds the shortest path between two randomly selected vertices, display it. It works on single oriented and non oriented graphs. */
+/*
+Dijkstra algorithm handler. Finds the shortest path between two randomly
+selected vertices, display it. It works on single oriented and non oriented
+graphs.
+*/
 std::vector<const Edge*>* Graph::handler_dijkstra(Vertex* source, Vertex* destination) {
     clear_color();
     if(!source || !destination) { select_two_random_vertices(const_cast<const Vertex**>(&source), const_cast<const Vertex**>(&destination)); }
@@ -52,7 +62,13 @@ std::vector<const Edge*>* Graph::handler_dijkstra(Vertex* source, Vertex* destin
     return algo_dijkstra(source, destination);
 }
 
-/* Edmonds-Karp algorithm handler. It returns and prints the value of the maximum flow in the console and leave the current graph unchanged. The algorithm needs a single-oriented graph with integer flows. If the current graph already has this properties, the algorithm is made on the graph, otherwise directions and capacities are randomly set. */
+/*
+Edmonds-Karp algorithm handler. It returns and prints the value of the
+maximum flow in the console and leave the current graph unchanged. The
+algorithm needs a single-oriented graph with integer flows. If the current
+graph already has this properties, the algorithm is made on the graph,
+otherwise directions and capacities are randomly set.
+*/
 int Graph::handler_edmonds_karp(Vertex* source, Vertex* sink) {
     clear_color();
     if(orientation==NONE || orientation==TWO_WAYS) { generate_random_arc_directions();         orientation                    = ONE_WAY; }
@@ -65,7 +81,13 @@ int Graph::handler_edmonds_karp(Vertex* source, Vertex* sink) {
     return res;
 }
 
-/* Fulkerson algorithm handler. It returns and prints the value of the maximum flow in the console and leave the current graph unchanged. The algorithm needs a single-oriented graph with integer flows. If the current graph already has this properties, the algorithm is made on the graph, otherwise directions and capacities are randomly set. */
+/*
+Fulkerson algorithm handler. It returns and prints the value of the maximum
+flow in the console and leave the current graph unchanged. The algorithm needs
+a single-oriented graph with integer flows. If the current graph already has
+this properties, the algorithm is made on the graph, otherwise directions and
+capacities are randomly set.
+*/
 int Graph::handler_ford_fulkerson(Vertex* source, Vertex* sink) {
     clear_color();
     if(orientation==NONE || orientation==TWO_WAYS) { generate_random_arc_directions();         orientation                    = ONE_WAY; }
@@ -78,7 +100,11 @@ int Graph::handler_ford_fulkerson(Vertex* source, Vertex* sink) {
     return res;
 }
 
-/* Prim algorithm handler. The algorithm needs a non oriented graph with capacities. The method returns a vector of all the edges in the subgraph. */
+/*
+Prim algorithm handler. The algorithm needs a non oriented graph
+with capacities. The method returns a vector of all the edges in the
+subgraph.
+*/
 std::vector<const Edge*>* Graph::handler_prim() {
     clear_color();
     if(orientation==ONE_WAY || orientation==TWO_WAYS) { orientation = NONE; }
@@ -90,7 +116,10 @@ std::vector<const Edge*>* Graph::handler_prim() {
     return sub_graph;
 }
 
-/* Computes the Traveling Salesman problem given a source and a set of destinations. If not provided, those vertices are randomly selected. */
+/*
+Computes the Traveling Salesman problem given a source and a set of
+destinations. If not provided, those vertices are randomly selected.
+*/
 std::vector<const Vertex*>* Graph::handler_traveling_salesman(Vertex* source, std::vector<const Vertex*>* destinations) {
     clear_color();
     bool delete_destinations = false;

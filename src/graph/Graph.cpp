@@ -36,11 +36,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "graph_representation/GraphRepresentationAdjacencyMatrix.hpp"
 #include "components/Vertex.hpp"
 
-/* Static variables. */
+/*
+Static variables.
+*/
 Window* Graph::window(0);
 int     Graph::graph_counter(0);
 
-/* Graph constructor. */
+/*
+Graph constructor.
+*/
 Graph::Graph(GRAPH_TYPE type, int nb_vertices) :
     nb_vertices(nb_vertices),
     type(type),
@@ -50,31 +54,33 @@ Graph::Graph(GRAPH_TYPE type, int nb_vertices) :
     window_id(-1) {
     graph_counter++;
     switch(type) {
-        /*case INCIDENCE_MATRIX :
-            break;
-        case INCIDENCE_LIST :
-            break;
-        case ADJACENCY_LIST :
-            break;*/
         case ADJACENCY_MATRIX :
             graph_representation = new GraphRepresentationAdjacencyMatrix(nb_vertices);
             break;
     }
 }
 
-/* Graph copy constructor. */
+/*
+Graph copy constructor.
+*/
 Graph::Graph(const Graph &g)
     : Graph(g.type, g.nb_vertices) {
     *this = g;
 }
 
-/* Graph desctructor. */
+/*
+Graph desctructor.
+*/
 Graph::~Graph() {
     graph_counter--;
     delete graph_representation;
 }
 
-/* Graph assignment operator. It is only possible to copy graphs with same number of vertices. All the parameters are copied expect the window handling that has to be manually set. */
+/*
+Graph assignment operator. It is only possible to copy graphs with
+same number of vertices. All the parameters are copied expect the
+window handling that has to be manually set.
+*/
 Graph &Graph::operator=(const Graph &g) {
     if(this==&g) {
         return *this;
@@ -88,23 +94,31 @@ Graph &Graph::operator=(const Graph &g) {
     }
 }
 
-/* Creates an Edge that binds two vertices. */
+/*
+Creates an Edge that binds two vertices.
+*/
 Edge* Graph::add_edge(const Vertex* v1, const Vertex* v2, double capacity) {
     return graph_representation->add_edge(v1, v2, capacity, 0);
 }
 
-/* Creates a Vertex with optional 2D coordinates. */
+/*
+Creates a Vertex with optional 2D coordinates.
+*/
 Vertex* Graph::add_vertex(double x, double y) {
     return graph_representation->add_vertex(x, y);
 }
 
-/* Generates random vertices and build edges to form a Gabriel graph. */
+/*
+Generates random vertices and build edges to form a Gabriel graph.
+*/
 void Graph::generate() {
     generate_random_vertices();
     generate_gabriel_naive();
 }
 
-/* Returns the graph's total weight. */
+/*
+Returns the graph's total weight.
+*/
 double Graph::get_total_weight() {
     std::vector<Edge*>::iterator it_begin = graph_representation->getEdges()->begin();
     std::vector<Edge*>::iterator it_end   = graph_representation->getEdges()->end();
@@ -116,7 +130,9 @@ double Graph::get_total_weight() {
     }
 }
 
-/* Naive algorithm to obtain a Gabriel graph from a set of vertices. */
+/*
+Naive algorithm to obtain a Gabriel graph from a set of vertices.
+*/
 void Graph::generate_gabriel_naive() {
     for(int i=0 ; i<nb_vertices ; i++) {
         for(int j=i+1 ; j<nb_vertices ; j++) {
@@ -135,7 +151,12 @@ void Graph::generate_gabriel_naive() {
     }
 }
 
-/* Deletes the current graph. If the graph was displayed, the associated window is destroyed. If the graph was displayed and was the only one, the program terminates. If the current graph is not displayed, the function is equivalent to a call to 'delete graph;' */
+/*
+Deletes the current graph. If the graph was displayed, the associated
+window is destroyed. If the graph was displayed and was the only one,
+the program terminates. If the current graph is not displayed, the
+function is equivalent to a call to 'delete graph;'.
+*/
 void Graph::delete_graph() {
     if(is_displayed) {
         window->hide(window_id);
@@ -147,7 +168,9 @@ void Graph::delete_graph() {
     }
 }
 
-/* Adds a Graph handler to the Window object which subsequently creates a new window. */
+/*
+Adds a Graph handler to the Window object which subsequently creates a new window. 
+*/
 bool Graph::display() {
     if(window) {
         is_displayed = true;
@@ -160,7 +183,9 @@ bool Graph::display() {
     }
 }
 
-/* Keyboard function. */
+/*
+Keyboard function.
+*/
 void Graph::keyboard(unsigned char key, int x, int y) {
     bool this_deleted = false;
     switch(key) {
@@ -193,18 +218,20 @@ void Graph::keyboard(unsigned char key, int x, int y) {
                    break;
         case 't' : delete handler_traveling_salesman();
                    break;
-        case 13  : keyboard_dupplicate();           // enter
+        case 13  : keyboard_dupplicate();           /* enter */
                    break;
-        case 27  : delete_graph();                  // escape
+        case 27  : delete_graph();                  /* escape */
                    this_deleted = true;
                    break;
-        case 32  : clear();                         // space
+        case 32  : clear();                         /* space */
                    break;
     }
     if(!this_deleted) draw();
 }
 
-/* Generates or disables arc capacities. */
+/*
+Generates or disables arc capacities.
+*/
 void Graph::keyboard_capacities() {
     if(!arc_integer_capacities_defined) {
         generate_random_arc_integer_capacities();
@@ -219,7 +246,9 @@ void Graph::keyboard_capacities() {
     }
 }
 
-/* Generates or disables arc directions. */
+/*
+Generates or disables arc directions.
+*/
 void Graph::keyboard_directions() {
     if(orientation==NONE) {
         orientation = ONE_WAY;
@@ -230,14 +259,19 @@ void Graph::keyboard_directions() {
     }
 }
 
-/* Creates a dupplicate of the current graph and displays it. Returns true if the graph can be displayed. */
+/*
+Creates a dupplicate of the current graph and displays it. Returns
+true if the graph can be displayed.
+*/
 bool Graph::keyboard_dupplicate() {
     Graph* graph_duplicate = new Graph(type, nb_vertices);
     *graph_duplicate       = *this;
     return graph_duplicate->display();
 }
 
-/* Reset the graph to the initial parameters of color, arc capacity and direction. */
+/*
+Reset the graph to the initial parameters of color, arc capacity and direction.
+*/
 void Graph::clear() {
     arc_integer_capacities_defined = false;
     orientation                    = NONE;
@@ -249,13 +283,17 @@ void Graph::clear() {
     clear_color_vertices();
 }
 
-/* Reset the graph to the initial parameters of color. */
+/*
+Reset the graph to the initial parameters of color.
+*/
 void Graph::clear_color() {
     clear_color_edges();
     clear_color_vertices();
 }
 
-/* Reset the vertices to the initial parameters of color. */
+/*
+Reset the vertices to the initial parameters of color.
+*/
 void Graph::clear_color_vertices() {
     for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
@@ -265,14 +303,20 @@ void Graph::clear_color_vertices() {
     }
 }
 
-/* Reset the edges to the initial parameters of color. */
+/*
+Reset the edges to the initial parameters of color.
+*/
 void Graph::clear_color_edges() {
     for(Edge* e : *graph_representation->getEdges()) {
         e->setColor(Constants::EDGE_COLOR_R, Constants::EDGE_COLOR_G, Constants::EDGE_COLOR_B);
     }
 }
 
-/* Creates a new graph with the given number of vertices. The actual graph (this) is deleted. If the previous graph was being displayed, the new graph is automatically displayed in the same window. */
+/*
+Creates a new graph with the given number of vertices. The actual graph
+(this) is deleted. If the previous graph was being displayed, the new
+graph is automatically displayed in the same window.
+*/
 Graph* Graph::rebuild_graph(int new_nb_vertices) {
     Graph* new_graph = new Graph(type, new_nb_vertices);
     new_graph->generate();
@@ -286,19 +330,27 @@ Graph* Graph::rebuild_graph(int new_nb_vertices) {
     return new_graph;
 }
 
-/* Selects two random vertices from the graph. If the graph has at least two vertices, the two selected vertices are different. */
+/*
+Selects two random vertices from the graph. If the graph has at
+least two vertices, the two selected vertices are different.
+*/
 void Graph::select_two_random_vertices(const Vertex** v1, const Vertex** v2) const {
     *v1 = graph_representation->getVertices()->at(rand() % nb_vertices);
     if(nb_vertices>=2) { do { *v2 = graph_representation->getVertices()->at(rand() % nb_vertices); } while(*v1==*v2); }
     else               { *v2 = *v1; }
 }
 
-/* Selects oen random vertices from the graph. */
+/*
+Selects oen random vertices from the graph.
+*/
 void Graph::select_one_random_vertices(const Vertex** v) const {
     *v = graph_representation->getVertices()->at(rand() % nb_vertices);
 }
 
-/* Selects n random vertices from the graph. If the graph has at least two vertices, the two selected vertices are different. */
+/*
+Selects n random vertices from the graph. If the graph has at least
+two vertices, the two selected vertices are different.
+*/
 void Graph::select_n_random_vertices(std::vector<const Vertex*>** vertices, int n, const Vertex* except) const {
     std::set<const Vertex*> included_vertices;
     for(int i=0 ; i<n ; i++) {
@@ -311,7 +363,12 @@ void Graph::select_n_random_vertices(std::vector<const Vertex*>** vertices, int 
     }
 }
 
-/* Disables the checks before an algorithm's execution and trusts the user. For example, assumes that all capacities and arc directions are correctly set before executing the Ford Fulkerson algorithm. Good behavior cannot be guaranted if those conditions are in fact not applied. */
+/*
+Disables the checks before an algorithm's execution and trusts the user.
+For example, assumes that all capacities and arc directions are correctly
+set before executing the Ford Fulkerson algorithm. Good behavior cannot be
+guaranted if those conditions are in fact not applied.
+*/
 void Graph::set_ready_for_algo(GRAPH_ALGO algo) {
     switch(algo) {
         case FORD_FULKERSON : orientation                    = ONE_WAY;

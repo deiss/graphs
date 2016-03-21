@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Graph {
 
-    public :
+    public:
 
         Graph(GRAPH_TYPE, int);
         Graph(const Graph&);
@@ -79,7 +79,7 @@ class Graph {
         Graph*                      rebuild_graph(int);
         void                        set_ready_for_algo(GRAPH_ALGO algo);
  
-    private :
+    private:
     
         class IncidenceMatrix;
         class IncidenceList;
@@ -112,13 +112,13 @@ class Graph {
         void                        select_two_random_vertices(const Vertex**, const Vertex**)                 const;
         void                        select_n_random_vertices(std::vector<const Vertex*>**, int, const Vertex*) const;
 
-  const int                  nb_vertices;
-  const GRAPH_TYPE           type;
-        bool                 arc_integer_capacities_defined;
-        GraphRepresentation* graph_representation;
-        bool                 is_displayed;
-        GRAPH_ORIENTATION    orientation;
-        int                  window_id;
+  const int                  nb_vertices;                      /* number of vertices of the graph - see enum in Constants.hpp */
+  const GRAPH_TYPE           type;                             /* defines the type of the graph (adjacency, list...) */
+        bool                 arc_integer_capacities_defined;   /* defines if the graph's adges have capacities or not */
+        GraphRepresentation* graph_representation;             /* holds the vertices and edges of the graph */
+        bool                 is_displayed;                     /* true is the graph is being displayed */
+        GRAPH_ORIENTATION    orientation;                      /* defines if the graph is oriented - see enum in Constants.hpp */
+        int                  window_id;                        /* if the graph is displayed, its window's id */
 
 };
 

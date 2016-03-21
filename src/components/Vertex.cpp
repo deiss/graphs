@@ -26,7 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Vertex.hpp"
 
-/* Vertex constructor. */
+/*
+Initializes the variables.
+*/
 Vertex::Vertex(double x, double y, int id, unsigned char color_r, unsigned char color_g, unsigned char color_b) :
     id(id),
     x(x),
@@ -36,13 +38,17 @@ Vertex::Vertex(double x, double y, int id, unsigned char color_r, unsigned char 
     color_b(color_b) {
 }
 
-/* Vertex copy constructor. */
-Vertex::Vertex(const Vertex& v)
-    : Vertex(v.getX(), v.getY(), v.getId()) {
+/*
+Copy constructor.
+*/
+Vertex::Vertex(const Vertex& v) :
+    Vertex(v.getX(), v.getY(), v.getId()) {
     *this = v;
 }
 
-/* Vertex assignment operator. */
+/*
+Assignment operator.
+*/
 Vertex &Vertex::operator=(const Vertex& v) {
     if(this==&v) {
         return *this;
@@ -55,7 +61,10 @@ Vertex &Vertex::operator=(const Vertex& v) {
     }
 }
 
-/* Computes the distance between two vertices. */
+/*
+Computes the euclidian distance between this vertex and
+another one, given as a Vertex* object or a set of 2D coordinates.
+*/
 double Vertex::distanceTo(const Vertex* v) const {
     return sqrt(pow(x-v->getX(), 2) + pow(y-v->getY(), 2));
 }

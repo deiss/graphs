@@ -26,7 +26,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "constants/Constants.hpp"
 #include "Edge.hpp"
 
-/* Edge constructors. */
+/*
+Initializes the variables.
+*/
 Edge::Edge(const Vertex* v1, const Vertex* v2) :
     color_r(Constants::EDGE_COLOR_R),
     color_g(Constants::EDGE_COLOR_G),
@@ -64,7 +66,9 @@ Edge::Edge(const Vertex* v1, const Vertex* v2, unsigned char color_r, unsigned c
     v2(const_cast<Vertex*>(v2)) {
 }
 
-/* Edge assignment operator. */
+/*
+Assignment operator.
+*/
 Edge& Edge::operator=(const Edge& e) {
     if(this==&e) {
         return *this;
@@ -79,7 +83,9 @@ Edge& Edge::operator=(const Edge& e) {
     }
 }
 
-/* Switches v1 to v2. */
+/*
+Switches v1 and v2.
+*/
 void Edge::switch_vertices() {
     Vertex* v = v1;
     v1 = v2;

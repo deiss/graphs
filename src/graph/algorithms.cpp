@@ -30,7 +30,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Graph.hpp"
 
-/* A* algorithm. While there is an unvisited vertex, select the one with minimum cost and study its neighbors. Stops when the current vertex is the destination. */
+/*
+A* algorithm. While there is an unvisited vertex, select the one with
+minimum cost and study its neighbors. Stops when the current vertex
+is the destination. A* is more efficient that Dijkstra thanks to how
+it finds the vertex with minimum cost. Instead of just looking at the
+cost of the vertex, it also takes into account the minimal remaining
+cost to go to the destination. This value is the euclidian distance.
+*/
 std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* destination, bool print_path) {
     unsigned int                           inf_unsigned = -1; inf_unsigned /= 2;
     int                                    inf_signed   = inf_unsigned;
@@ -47,9 +54,11 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
     costs[source] = 0;
     search.insert(source);
     while(!search.empty()) {
-        /* finds the best potential vertex and extracts it from the list */
+        /* finds the best potential vertex and extracts it from the list - updated search compared to Dijkstra */
         std::set<const Vertex*>::iterator it_min;
-        it_min = std::min_element(search.begin(), search.end(), [&](const Vertex* v1, const Vertex* v2) { return costs[v1]+v1->distanceTo(destination)<costs[v2]+v2->distanceTo(destination); });
+        it_min = std::min_element(search.begin(), search.end(), [&](const Vertex* v1, const Vertex* v2) {
+            return costs[v1]+v1->distanceTo(destination)<costs[v2]+v2->distanceTo(destination);
+        });
         const Vertex* v_min = *it_min;
         search.erase(it_min);
         visited.insert(v_min);
@@ -94,7 +103,9 @@ std::vector<const Edge*>* Graph::algo_astar(const Vertex* source, const Vertex* 
     }
 }
 
-/* Bron-Kerbosch algorithm. Returns only the first found biggest clique. */
+/*
+Bron-Kerbosch algorithm. Returns only the first found biggest clique.
+*/
 std::set<const Vertex*>* Graph::algo_bron_kerbosch() {
     std::vector<std::set<const Vertex*>> cliques;
     std::set<const Vertex*>*             max_clique = new std::set<const Vertex*>;
@@ -115,7 +126,9 @@ std::set<const Vertex*>* Graph::algo_bron_kerbosch() {
     return max_clique;
 }
 
-/* Bron-Kerbosch callback method. */
+/*
+Bron-Kerbosch callback method.
+*/
 bool Graph::algo_bron_kerbosch_callback(std::vector<std::set<const Vertex*>>* cliques, std::set<const Vertex*> R, std::set<const Vertex*> P, std::set<const Vertex*> X) {
     if(P.empty() && X.empty()) {
         cliques->push_back(R);
@@ -142,7 +155,11 @@ bool Graph::algo_bron_kerbosch_callback(std::vector<std::set<const Vertex*>>* cl
     return false;
 }
 
-/* Dijkstra algorithm. While there is an unvisited vertex, select the one with minimum cost and study its neighbors. Stops when the current vertex is the destination. */
+/*
+Dijkstra algorithm. While there is an unvisited vertex, select the one
+with minimum cost and study its neighbors. Stops when the current vertex
+is the destination.
+*/
 std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Vertex* destination) {
     unsigned int                           inf_unsigned = -1; inf_unsigned /= 2;
     int                                    inf_signed   = inf_unsigned;
@@ -161,7 +178,9 @@ std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Verte
     while(!search.empty()) {
         /* finds the best potential vertex and extracts it from the list */
         std::set<const Vertex*>::iterator it_min;
-        it_min = std::min_element(search.begin(), search.end(), [&](const Vertex* v1, const Vertex* v2) { return costs[v1]<costs[v2]; });
+        it_min = std::min_element(search.begin(), search.end(), [&](const Vertex* v1, const Vertex* v2) {
+            return costs[v1]<costs[v2];
+        });
         const Vertex* v_min = *it_min;
         search.erase(it_min);
         visited.insert(v_min);
@@ -205,7 +224,12 @@ std::vector<const Edge*>* Graph::algo_dijkstra(const Vertex* source, const Verte
     }
 }
 
-/* Ford Fulkerson algorithm. While there is a path from source to sink, find the smallest capacity of the path, add it to the max_flow and to every reverse edge of the path, and remove it from every edge in the path. When no more path is found, max_flow has the maximum flow and is returned. */
+/*
+Edmonds Karp algorithm. While there is a path from source to sink, find
+the smallest capacity of the path, add it to the max_flow and to every
+reverse edge of the path, and remove it from every edge in the path. When
+no more path is found, max_flow has the maximum flow and is returned.
+*/
 int Graph::algo_edmonds_karp(const Vertex* source, const Vertex* sink) {
     int    max_flow          = 0;
     Graph* residual_graph    = new Graph(type, nb_vertices);
@@ -238,7 +262,9 @@ int Graph::algo_edmonds_karp(const Vertex* source, const Vertex* sink) {
     return max_flow;
 }
 
-/* Breadth-First-Search algorithm for Edmonds-Karp. */
+/*
+Breadth-First-Search algorithm for Edmonds-Karp.
+*/
 bool Graph::algo_edmonds_karp_bfs(const Graph* graph, std::map<const Vertex*, double>* path_capacity, std::map<const Vertex*, const Vertex*>* parents, const Vertex* source, const Vertex* sink) {
     std::queue<const Vertex*> bfs;
     unsigned int              inf_unsigned = -1; inf_unsigned /= 2;
@@ -266,7 +292,12 @@ bool Graph::algo_edmonds_karp_bfs(const Graph* graph, std::map<const Vertex*, do
     return false;
 }
 
-/* Ford Fulkerson algorithm. While there is a path from source to sink, find the smallest capacity of the path, add it to the max_flow and to every reverse edge of the path, and remove it from every edge in the path. When no more path is found, max_flow has the maximum flow and is returned. */
+/*
+Ford Fulkerson algorithm. While there is a path from source to sink, find
+the smallest capacity of the path, add it to the max_flow and to every reverse
+edge of the path, and remove it from every edge in the path. When no more path
+is found, max_flow has the maximum flow and is returned.
+*/
 int Graph::algo_ford_fulkerson(const Vertex* source, const Vertex* sink) {
     int    max_flow          = 0;
     Graph* residual_graph    = new Graph(type, nb_vertices);
@@ -310,7 +341,12 @@ int Graph::algo_ford_fulkerson(const Vertex* source, const Vertex* sink) {
     return max_flow;
 }
 
-/* Ford Fulkerson algorithm callback method. Tries to find a valid path from source to sink and returns true if a path is found. Otherwise returns false. */
+/*
+Ford Fulkerson algorithm callback method. Tries to find a valid path from
+source to sink and returns true if a path is found. Otherwise returns false.
+The search is DFS which makes it inefficient. Edmonds-Karp advantage is to
+perform a BFS which overall reduces the running time.
+*/
 bool Graph::algo_ford_fulkerson_dfs(const Graph* graph, std::vector<const Vertex*>* path, std::set<const Vertex*>* visited, const Vertex* source, const Vertex* sink) {
     for(const Vertex* v : graph->graph_representation->get_direct_neighbors(path->back(), orientation)) {
         if(graph->graph_representation->get_capacity_from_to(path->back(), v)>0) {
@@ -336,7 +372,11 @@ bool Graph::algo_ford_fulkerson_dfs(const Graph* graph, std::vector<const Vertex
     return false;
 }
 
-/* Prim algorithm. While there are edges in the set, select the one with less capacity, include it in the subgraph and study its two vertices. */
+/*
+Prim algorithm. While there are edges in the set, select the one with
+less capacity, include it in the subgraph and study its two vertices.
+It returns the minimal covering graph.
+*/
 std::vector<const Edge*>* Graph::algo_prim() {
     std::set<const Vertex*>   visited;
     std::set<const Edge*>     search;
@@ -372,7 +412,10 @@ std::vector<const Edge*>* Graph::algo_prim() {
     return sub_graph;
 }
 
-/* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
+/*
+The Traveling Salesman problem. Given a source and a list of vertices to visit,
+returns the shortest trip so that every destination is visited and the salesman
+goes back to the source. This is a difficult problem. */
 std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source, std::vector<const Vertex*>* destinations) {
     std::vector<const Vertex*>                 path;
     std::vector<const Vertex*>*                best_path    = new std::vector<const Vertex*>;
@@ -406,7 +449,10 @@ std::vector<const Vertex*>* Graph::algo_traveling_salesman(const Vertex* source,
     return best_path;
 }
 
-/* The Traveling Salesman problem. Given a source and a list of vertices to visit, returns the shortest trip so that every destination is visited and the salesman goes back to the source. This is a difficult problem. */
+/*
+Callback for the Traveling Salesman problem.
+Branch and bound algorithm.
+*/
 void Graph::algo_traveling_salesman_callback(double** cost_matrix, std::map<const Vertex*, unsigned long int> v_map, const Vertex* source, std::vector<const Vertex*>* destinations, std::vector<const Vertex*>* path, std::vector<const Vertex*>* best_path, std::set<const Vertex*>* visited, double cost, double* min_cost) {
     if(path->size()==destinations->size()) {
         cost += cost_matrix[v_map[path->back()]][v_map[source]];
@@ -434,7 +480,10 @@ void Graph::algo_traveling_salesman_callback(double** cost_matrix, std::map<cons
     }
 }
 
-/* Creates the cost matrix using the A* algorithm. */
+/*
+Creates the cost matrix for the traveling salesman
+problem using the A* algorithm.
+*/
 double** Graph::algo_traveling_salesman_cost_matrix(const Vertex* source, std::vector<const Vertex*>* destinations) {
     int len = static_cast<int>(destinations->size())+1;
     double **cost_matrix = new double*[len];

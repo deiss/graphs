@@ -33,21 +33,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "graph/Graph.hpp"
 #include "Window.hpp"
 
-/* Static variables. */
+/*
+Static variables.
+*/
 std::vector<const Graph*>* Window::graphs;
 
-/* Window constructor. */
-Window::Window()
-    : width(640), height(470) {
+/*
+Initializes the variables and creates the vector of graphhs.
+*/
+Window::Window() :
+    width(640),
+    height(470) {
     graphs = new std::vector<const Graph*>;
 }
 
-/* Window destructor. */
+/*
+Deletes the graph vector.
+*/
 Window::~Window() {
     delete graphs;
 }
 
-/* Initialization function. */
+/*
+Initialization function.
+*/
 void Window::init() {
     int argc = 1;
     char* argv[1] = {(char*)"Graphs"};
@@ -56,13 +65,17 @@ void Window::init() {
     glutInitWindowSize(width, height);
 }
 
-/* Creates a new window for a new Graph. */
+/*
+Creates a new window for a new Graph.
+*/
 int Window::add(const Graph* g) {
     graphs->push_back(g);
     return glutCreateWindow("");
 }
 
-/* Destroys the window. */
+/*
+Destroys the window.
+*/
 void Window::hide(int window_id) {
     for(std::vector<const Graph*>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
         if((*it)->getWindowId()==window_id) {
@@ -73,7 +86,9 @@ void Window::hide(int window_id) {
     glutDestroyWindow(window_id);
 }
 
-/* Calls the Graph draw() function. */
+/*
+Calls the Graph draw() function.
+*/
 void Window::draw() {
     for(const Graph* graph : *graphs) {
         if(glutGetWindow()==graph->getWindowId()) {
@@ -82,7 +97,9 @@ void Window::draw() {
     }
 }
 
-/* Calls the Graph keyboard() function. */
+/*
+Calls the Graph keyboard() function.
+*/
 void Window::keyboard(unsigned char key, int x, int y) {
     for(const Graph* graph : *graphs) {
         if(glutGetWindow()==graph->getWindowId()) {
@@ -92,7 +109,9 @@ void Window::keyboard(unsigned char key, int x, int y) {
     }
 }
 
-/* Initializes new windows. */
+/*
+Initializes new windows.
+*/
 void Window::launch(int window_id) const {
     glutSetWindow(window_id);
     glutSetWindowTitle(("Graph - " + std::to_string(window_id)).c_str());
@@ -103,14 +122,18 @@ void Window::launch(int window_id) const {
     glutMainLoop();
 }
 
-/* Reshape function. */
+/*
+Reshape function.
+*/
 void Window::reshape(int width, int height) {
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 }
 
-/* Updates the Graph handler with the new Graph. */
+/*
+Updates the Graph handler with the new Graph.
+*/
 void Window::replaceGraph(const Graph* old_graph, const Graph* new_graph) {
     for(std::vector<const Graph*>::iterator it=graphs->begin() ; it!=graphs->end() ; it++) {
         if(*it==old_graph) {

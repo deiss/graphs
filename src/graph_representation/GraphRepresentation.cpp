@@ -26,21 +26,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <iostream>
 
-/* GraphRepresentation constructor. */
-GraphRepresentation::GraphRepresentation(int nb_vertices)
-     : nb_vertices(nb_vertices),
-       vertex_counter(0) {
-     vertices = new std::vector<Vertex*>;
-     edges    = new std::vector<Edge*>;
+/*
+Initializes the variables.
+*/
+GraphRepresentation::GraphRepresentation(int nb_vertices) :
+    nb_vertices(nb_vertices),
+    vertex_counter(0) {
+    vertices = new std::vector<Vertex*>;
+    edges    = new std::vector<Edge*>;
 }
 
-/* GraphRepresentation copy constructor. */
-GraphRepresentation::GraphRepresentation(const GraphRepresentation& g)
-    : GraphRepresentation(g.nb_vertices) {
-    *this = g;
+/*
+Copy constructor.
+*/
+GraphRepresentation::GraphRepresentation(const GraphRepresentation& g) :
+    GraphRepresentation(g.nb_vertices) {
+    copy(g);
 }
 
-/* GraphRepresentation destructor. */
+/*
+Deletes the vertices and edges.
+*/
 GraphRepresentation::~GraphRepresentation() {
     for(Vertex* v : *vertices) delete v;
     for(Edge* e : *edges)      delete e;
@@ -48,7 +54,9 @@ GraphRepresentation::~GraphRepresentation() {
     delete edges;
 }
 
-/* Copy function. */
+/*
+Copy function.
+*/
 void GraphRepresentation::copy(const GraphRepresentation& g) {
     if(this!=&g) {
         for(Vertex* v : *vertices) delete v; vertices->clear();
@@ -68,14 +76,18 @@ void GraphRepresentation::copy(const GraphRepresentation& g) {
     }
 }
 
-/* Creates a new Vertex. */
+/*
+Creates a new Vertex.
+*/
 Vertex* GraphRepresentation::add_vertex(double x, double y) {
     Vertex* v = new Vertex(x, y, vertex_counter++);
     vertices->push_back(v);
     return v;
 }
 
-/* Creates an Edge. */
+/*
+Creates an Edge.
+*/
 Edge* GraphRepresentation::add_edge(const Vertex* v1, const Vertex* v2) {
     Edge* e = new Edge(v1, v2);
     edges->push_back(e);

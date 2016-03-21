@@ -28,7 +28,7 @@ class Graph;
 
 class Window {
 
-    public :
+    public:
     
         Window();
         ~Window();
@@ -42,12 +42,12 @@ class Window {
  static void reshape(int, int);
         void replaceGraph(const Graph*, const Graph*);
     
-    private :
+    private:
     
- static std::vector<const Graph*>* graphs;
+ static std::vector<const Graph*>* graphs;   /* list of graphs that need to be displayed */
  
-  const int width;
-  const int height;
+  const int width;                           /* width of the window */
+  const int height;                          /* height of the window */
 
 };
 

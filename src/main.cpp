@@ -38,7 +38,7 @@ int main(int argc, const char * argv[]) {
     window.init();
     Graph::setWindow(&window);
     
-    /* grpah creation */
+    /* graph creation */
     Graph *graph = new Graph(ADJACENCY_MATRIX, 60);
     graph->generate();
     graph->display();

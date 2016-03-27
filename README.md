@@ -26,7 +26,7 @@ You need to have XCode installed on your system. Then running `make mac` will co
 
 Call `bin/graphs` to launch the application. The keys are described below.
 
-##### Graphs and Windows managements
+##### Graphs and Windows Management
 
 * `+`: add more vertices
 * `-`: remove vertices

@@ -122,6 +122,7 @@ destinations. If not provided, those vertices are randomly selected.
 */
 std::vector<const Vertex*>* Graph::handler_traveling_salesman(Vertex* source, std::vector<const Vertex*>* destinations) {
     clear_color();
+    if(orientation==ONE_WAY || orientation==TWO_WAYS) { orientation = NONE; }
     bool delete_destinations = false;
     if(!source)       { select_one_random_vertices(const_cast<const Vertex**>(&source)); }
     if(!destinations) { destinations = new std::vector<const Vertex*>;
